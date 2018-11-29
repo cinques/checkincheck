@@ -1,0 +1,57 @@
+<div class="controls-CompositeView__tileItem controls-ListView__item js-controls-ListView__item{{!!className ? className}}" data-hash="{{projItem.getHash()}}" data-id="{{item.getId()}}">
+    <div class="controls-CompositeView__tileContainer">
+        <div class="controls-ListView__itemCheckBox js-controls-ListView__itemCheckBox"></div>
+        <div class="events-BaseCardParticipantsUsers__user {{ item.get('Locked') ? 'events-BaseCardParticipantsUsers__user--user-banned' }}">
+            <div class="events-BaseCardParticipantsUsers__user-photo">
+                <ws:partial
+                    template="tmpl!Person/Info/Photo"
+                    dataItem="{{ item.getPhotoInfoModel() }}"
+                    size="{{ 40 }}"
+                    miniCardShowMode="{{ !templateBinding.publicLanding ? 'hoverClick' : 'disabled' }}"
+                />
+            </div>
+            <div class="events-BaseCardParticipantsUsers__user-info">
+                <div class="events-BaseCardParticipantsUsers__user-info-title">
+                    <div class="events-BaseCardParticipantsUsers__user-info-name">
+                        {{ item.getFullName() }}
+                    </div>
+                    <ws:if data="{{ templateBinding.visibleUserAnswer }}">
+                        <ws:if data="{{ item.get('MeetingMember') === true }}">
+                            <div class="events-BaseCardParticipantsUsers__user-info-answer icon-16 icon-Successful icon-disabled" title="{[Участвует]}"></div>
+                        </ws:if>
+                        <ws:else data="{{ item.get('MeetingMember') === false }}">
+                            <div class="events-BaseCardParticipantsUsers__user-info-answer icon-16 icon-Decline icon-disabled" title="{[Не участвует]}"></div>
+                        </ws:else>
+                        <ws:else data="{{ item.get('SelfInvited') === true && item.get('MeetingMember') === null }}">
+                            <div class="events-BaseCardParticipantsUsers__user-info-answer icon-16 icon-Favourite icon-disabled" title="{[Интересует]}"></div>
+                        </ws:else>
+                        <ws:else>
+                            <div class="events-BaseCardParticipantsUsers__user-info-answer icon-16 icon-Question2 icon-disabled" title="{[Не ответил]}"></div>
+                        </ws:else>
+                    </ws:if>
+                    <ws:else data="{{ templateBinding.visibleUserAttended }}">
+                        <ws:if data="{{ item.get('Attended') === true }}">
+                            <div class="events-BaseCardParticipantsUsers__user-info-answer icon-16 icon-Successful icon-disabled" title="{[Участвовал]}"></div>
+                        </ws:if>
+                        <ws:else data="{{ item.get('Attended') === false }}">
+                            <div class="events-BaseCardParticipantsUsers__user-info-answer icon-16 icon-Decline icon-disabled" title="{[Не участвовал]}"></div>
+                        </ws:else>
+                    </ws:else>
+                </div>
+
+
+                <!--FIXME-->
+                <div class="events-BaseCardParticipantsUsers__user-info-position">
+                    {{ item.amount }}
+                    <Events.CheckInCheck.DebtDetailing
+                       detailing="{{ item.detailing }}"
+                    />
+                </div>
+
+
+            </div>
+            <div class="events-BaseCardParticipantsUsers__user-actions js-controls-CompositeView__verticalItemActions"></div>
+            <div if="{{ item.get('Locked') }}" class="events-BaseCardParticipantsUsers__user-ban icon-16 icon-Decline icon-error user-locked-icon" title="{[Заблокирован]}"></div>
+        </div>
+    </div>
+</div>

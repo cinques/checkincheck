@@ -1,0 +1,130 @@
+<Events.BaseCard.DateInfo
+   if="{{ !_banner.date }}"
+   name="BaseCardDateInfo"
+   mode="content"
+   eventType="{{+record.Type}}"
+   dateTimeStart="{{record.DateTimeStart}}"
+   dateTimeEnd="{{record.DateTimeEnd}}"
+   onlyDateStart="{{record.completed}}"
+/>
+<Events.BaseCard.RegForm
+   name="BaseCardRegForm"
+   className="events-BaseCard__reg-form"
+   eventId="{{ record.get('Id') }}"
+   eventType="{{ +record.get('Type') }}"
+   answer="{{ 'record/CurrentPhaseRS/Answer'|bind:record.getAnswerId() }}"
+   inMembers="{{ 'record/InMembers'|bind:record.get('InMembers') }}"
+   currAuthor="{{ record.isCurrUserAuthor() }}"
+   translationState="{{ 'record/TranslationState'|bind:record.get('TranslationState') }}"
+   deleted="{{ 'record/IsDeleted'|bind:record.get('IsDeleted') }}"
+   state="{{ 'record/State'|bind:record.get('State') }}"
+   accessType="{{ 'record/AccessType'|bind:record.get('AccessType') }}"
+   guestPersonId="{{ record.get('GuestPersonId') }}"
+   publicLanding="{{ isGuest }}"
+   landing="{{ isLanding }}"
+/>
+<Events.BaseCard.VideoRecord if="{{+record.get('Type') === 2}}"
+   className="events-BaseCard__video-record"
+   eventId="{{ record.get('Id') }}"
+   videoRecord="{{ 'record/WebinarVideo'|bind:record.get('WebinarVideo') }}"
+   videoFolderId="{{ 'record/SbisDiskFolder'|bind:record.get('SbisDiskFolder') }}"
+   publicLanding="{{ isGuest }}"
+   completed="{{ 'record/completed'|bind:record.get('completed') }}"
+/>
+<Events.BaseCard.ShareSocial
+   className="events-BaseCard__share-social"
+   eventId="{{ record.get('Id') }}"
+   state="{{ 'record/State'|bind:record.get('State') }}"
+   deleted="{{ 'record/IsDeleted'|bind:record.get('IsDeleted') }}"
+   accessType="{{ 'record/AccessType'|bind:record.get('AccessType') }}"
+   shortName="{{ 'record/ShortName'|bind:record.get('ShortName') }}"
+   clientCreator="{{ record.get('ClientCreator') }}"
+   publicLanding="{{ isGuest }}"
+   landing="{{ isLanding }}"
+   visible="{{ 'readonly'|bind:!enabled }}"
+/>
+<Events.BaseCard.Speakers if="{{ _banner.date && +record.get('Type') === 2 }}"
+   name="Speakers"
+   mode="sidebar"
+   eventId="{{ record.get('Id') }}"
+   eventType="{{ +record.get('Type') }}"
+   eventAccessType="{{ 'record/AccessType'|bind:record.get('AccessType') }}"
+   speakers="{{ record.get('Speakers')}}"
+   speakerPhotoServiceUrl="{{ isGuest ? '/webinars/service/' }}"
+   speakerPhotoShowMiniCard="{{ !isGuest }}"
+   landing="{{ isLanding }}"
+/>
+<Events.BaseCard.Location
+   if="{{+record.get('Type') === 3}}"
+   fullRoomName="{{'record/RoomName'|bind:record.RoomName}}"
+   address="{{'record/Address'|bind:record.Address}}"
+   allowChangeEnable="{{false}}"
+   visible="{{'blocksVisible/locationView'|bind:_blocksVisible.locationView}}"
+/>
+<Events.BaseCard.Participants.Mini
+   name="ParticipantsMini"
+   eventId="{{ record.get('Id') }}"
+   eventType="{{ +record.get('Type') }}"
+   eventAccessType="{{ 'record/AccessType'|bind:record.get('AccessType') }}"
+   items="{{ record.get('ParticipantsMiniRS') }}"
+   photoShowMiniCard="{{ !isGuest }}"
+   photoServiceUrl="{{ isGuest ? '/webinars/service/' }}"
+   completed="{{ 'record/completed'|bind:record.get('completed') }}"
+   published="{{ 'record/published'|bind:record.get('published') }}"
+   canSee="{{'record/participantsAccessSettings/visibility'|mutable}}"
+   canAdd="{{'record/participantsAccessSettings/can_add'|mutable}}"
+   enabled="{{ 'editable'|bind:enabled }}"
+   visible="{{'blocksVisible/participants'|bind:_blocksVisible.participants}}"
+/>
+<Events.BaseCard.Organizers
+   name="BaseCardOrganizers"
+   eventId="{{ record.get('Id') }}"
+   items="{{ record.get('ClientOrganizerRS') }}"
+   idSppList="{{ 'record/ClientOrganizer'|mutable }}"
+   allowChangeEnable="{{ !isLanding }}"
+   denied="{{ 'record/organizersAccessSettings/denied'|mutable }}"
+   allowChangeDenied="{{ true }}"
+   visible="{{'blocksVisible/organizers'|bind:_blocksVisible.organizers}}"
+   landing="{{isLanding}}"
+   oldLanding="{{oldLanding}}"
+/>
+<Events.BaseCard.Contacts
+   name="Contacts"
+   eventId="{{ record.get('Id') }}"
+   eventAccessType="{{ 'record/AccessType'|bind:record.get('AccessType') }}"
+   items="{{ record.get('Contacts') }}"
+   showMiniCard="{{ !isGuest }}"
+   denied="{{ 'record/contactsAccessSettings/denied'|mutable }}"
+   allowChangeDenied="{{ true }}"
+   visible="{{'blocksVisible/contacts'|bind:_blocksVisible.contacts}}"
+   landing="{{isLanding}}"
+/>
+<Events.BaseCard.Discussions
+   eventId="{{ record.get('Id') }}"
+   eventType="{{ +record.get('Type') }}"
+   discussions="{{ record.get('Discussions').clone() }}"
+   denied="{{ 'record/questionsAccessSettings/denied'|mutable }}"
+   allowChangeDenied="{{ true }}"
+   canSee="{{ 'record/questionsAccessSettings/visibility'|mutable }}"
+   canAdd="{{ 'record/questionsAccessSettings/can_add'|mutable }}"
+   canAddQuestions="{{ 'rights/canAddQuestions'|bind:_rights.canAddQuestions }}"
+   visible="{{'blocksVisible/questions'|bind:_blocksVisible.questions}}"
+/>
+<ws:if data="{{+record.get('Type') !== 2}}">
+   <Events.BaseCard.Interviews
+      eventId="{{ record.get('Id') }}"
+      eventType="{{ +record.get('Type') }}"
+      interviews="{{ record.get('Interviews').clone() }}"
+      isAdmin="{{ 'rights/canAddInterviews'|bind:_rights.canAddInterviews }}"
+      denied="{{ 'record/quizAccessSettings/denied'|mutable }}"
+      canSee="{{ 'record/quizAccessSettings/visibility'|mutable }}"
+      allowChangeDenied="{{ true }}"
+      visible="{{'blocksVisible/interviews'|bind:_blocksVisible.interviews}}"
+   />
+</ws:if>
+
+
+<!--FIXME-->
+<Events.CheckInCheck.CheckWidget
+   eventId="{{ record.get('Id') }}"
+/>

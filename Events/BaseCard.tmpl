@@ -1,0 +1,157 @@
+<div
+    class="
+        events-BaseCard
+        {{+record.Type === 2 ? 'events-BaseCard--webinar' : 'events-BaseCard--event'}}
+        {{!_banner.size ? 'events-BaseCard--no-header'}}
+        {{_banner.size === 'big' ? 'events-BaseCard--big-header'}}"
+>
+    <div if="{{_banner.size}}" class="events-BaseCard__header">
+        <Events.BaseCard.Header
+            name="BaseCardHeader"
+            publicLanding="{{isGuest}}"
+            eventType="{{+record.get('Type')}}"
+            cfg="{{record.Landing}}"
+            subject="{{record.Name}}"
+            shortDescr="{{record.ShortDescription}}"
+            dateTimeStart="{{record.DateTimeStart}}"
+            dateTimeEnd="{{record.DateTimeEnd}}"
+            hierarchy="{{record.get('Иерархия')}}"
+            idMainDoc="{{record.get('IdMainDoc')}}"
+            isAdmin="{{_rights.isAdmin}}"
+            rightMargin="{{headerRightMargin}}"
+            oldLanding="{{oldLanding}}"
+        />
+    </div>
+    <Lib.Control.SwitchableArea.SwitchableArea
+        name="BodyAreas"
+        class="events-BaseCard__body"
+        loadType="cached"
+        defaultArea="{{defaultTabId}}"
+    >
+        <ws:items>
+            <ws:Array>
+                <!--region Главная-->
+                <ws:Object id="main">
+                    <ws:content>
+                        <div class="events-BaseCard__main">
+                            <div class="events-BaseCard__main-sidebar">
+                                <SBIS3.CONTROLS.ScrollContainer class="events-BaseCard__sidebar-scroll-container">
+                                    <ws:content>
+                                        <div class="events-BaseCard__sidebar-content">
+                                            <ws:partial
+                                                template="{{sidebarTmpl}}"
+                                                record="{{record}}"
+                                                enabled="{{enabled}}"
+                                                isLanding="{{isLanding}}"
+                                                isGuest="{{isGuest}}"
+                                                guestPersonId="{{ guestPersonId }}"
+                                                allowChangeEnable="{{allowChangeEnable}}"
+                                                _banner="{{_banner}}"
+                                                _rights="{{_rights}}"
+                                                _blocksVisible="{{_blocksVisible}}"
+                                            />
+                                        </div>
+                                    </ws:content>
+                                </SBIS3.CONTROLS.ScrollContainer>
+                            </div>
+                            <div class="events-BaseCard__main-content">
+                                <SBIS3.CONTROLS.ScrollContainer
+                                    class="events-BaseCard__main-scroll-container"
+                                    stickyContainer="{{true}}"
+                                >
+                                    <ws:content>
+                                        <ws:partial
+                                            template="{{aboutTmpl}}"
+                                            record="{{record}}"
+                                            enabled="{{enabled}}"
+                                            allowChangeEnable="{{allowChangeEnable}}"
+                                            isGuest="{{isGuest}}"
+                                            _isDemo="{{_isDemo}}"
+                                            _banner="{{_banner}}"
+                                            _rights="{{_rights}}"
+                                            _readRoomAccess="{{_readRoomAccess}}"
+                                            _commentsEmptyHTML="{{_commentsEmptyHTML}}"
+                                            _blocksVisible="{{_blocksVisible}}"
+                                        />
+                                    </ws:content>
+                                </SBIS3.CONTROLS.ScrollContainer>
+                                <ws:if data="{{!isGuest}}">
+                                    <ws:partial
+                                        template='optional!SocnetNews/Comments/Creator'
+                                        name="CommentsCreator"
+                                        class="events-BaseCard__comments-sender"
+                                        enabled="{{true}}"
+                                        allowChangeEnable="{{false}}"
+                                        commentMaxHeight="{{200}}"
+                                        object="{{record.get('EventInfo') && record.get('EventInfo').get('Object')}}"
+                                        eventChannel="{{record.get('EventInfo') && record.get('EventInfo').get('Channel')}}"
+                                        visible="{{'blocksVisible/comments/sender'|bind:record.get('AccessType') === 1}}"
+                                    />
+                                </ws:if>
+                            </div>
+                        </div>
+                    </ws:content>
+                </ws:Object>
+                <!--endregion-->
+                <!--region Участники-->
+                <ws:Object
+                    id="participants"
+                    class="events-BaseCard__main"
+                    template="Events/BaseCard/Participants"
+                >
+                    <ws:componentOptions
+                        name="Participants"
+                        eventId="{{ record.get('Id') }}"
+                        eventType="{{ +record.get('Type') }}"
+                        eventAccessType="{{ record.get('AccessType') }}"
+                        published="{{ record.get('published') }}"
+                        completed="{{ record.get('completed') }}"
+                        publicLanding="{{ isGuest }}"
+                        permissions="{{ _rights.participants }}"
+                        allowChangeEnable="{{ false }}"
+                    />
+                </ws:Object>
+                <!--endregion-->
+                <!--region Опросы-->
+                <ws:Object
+                   id="interviews"
+                   class="events-BaseCard__interviews"
+                   template="Events/BaseCard/InterviewsPage"
+                >
+                    <ws:componentOptions
+                       name="Interviews"
+                       eventId="{{ record.get('Id') }}"
+                       isAdmin="{{ _rights.canAddInterviews }}"
+                    />
+                </ws:Object>
+                <!--endregion-->
+                <!--region Вопросы-->
+                <ws:Object
+                   id="questions"
+                   class="events-BaseCard__questions"
+                   template="Events/BaseCard/DiscussionsPage"
+                >
+                    <ws:componentOptions
+                       name="Discussions"
+                       eventId="{{ record.get('Id') }}"
+                       canAddQuestions="{{ _rights.canAddQuestions }}"
+                    />
+                </ws:Object>
+                <!--endregion-->
+
+                <!--FIXME region ProductList-->
+                <ws:Object
+                   id="productList"
+                   class="events-BaseCard__productList"
+                   template="Events/CheckInCheck/ProductList"
+                >
+                    <ws:componentOptions
+                       name="ProductList"
+                    />
+                </ws:Object>
+                <!--endregion-->
+
+            </ws:Array>
+        </ws:items>
+    </Lib.Control.SwitchableArea.SwitchableArea>
+</div>

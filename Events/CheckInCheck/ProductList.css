@@ -1,0 +1,18 @@
+.events-ProductList__AddCheck {
+  margin-left: 8px;
+}
+.events-ProductList__header {
+  display: flex;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+.events-ProductList__list {
+  margin-top: 5px;
+}
+.events-ProductList__list > *:not(:last-child) {
+  margin-bottom: 4px;
+}
+.events-ProductList__name {
+  font-weight: bold;
+  width: 64px;
+}

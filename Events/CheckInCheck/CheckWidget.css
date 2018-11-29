@@ -1,0 +1,20 @@
+.events-CheckWidget__AddCheck {
+  margin-left: 8px;
+}
+.events-CheckWidget__list {
+  margin-top: 5px;
+}
+.events-CheckWidget__list > *:not(:last-child) {
+  margin-bottom: 4px;
+}
+.events-CheckWidget__row {
+  display: flex;
+  align-items: baseline;
+}
+.events-CheckWidget__row > *:not(:last-child) {
+  margin-right: 4px;
+}
+.events-CheckWidget__name {
+  font-weight: bold;
+  width: 64px;
+}
