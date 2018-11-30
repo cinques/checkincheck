@@ -1,0 +1,13 @@
+.events-Check__name {
+  color: #242942;
+  font-weight: bold;
+}
+
+.events-Check__price {
+  color: #999999;
+}
+
+.events-Check {
+  display: flex;
+  justify-content: space-between;
+}
