@@ -18,11 +18,6 @@ define(
             }
          },
 
-         setEnabled: function (value) {
-            CheckWidget.superclass.setEnabled.call(this, value);
-            this._children.AddCheck.setVisible(value);
-         },
-
          init: function () {
             CheckWidget.superclass.init.apply(this);
             this._initChildren();

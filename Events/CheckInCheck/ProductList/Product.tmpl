@@ -1,3 +1,24 @@
 <div class="events-Product">
-   {{ item.name }}
+   <div class="events-Product__name">{{ item.name }}</div>
+   <div class="events-Product__price">{{item.price}}₽</div>
+   <SBIS3.CONTROLS.DropdownList
+           class="events-Product__dropdown"
+        idProperty="key"
+        displayProperty="title"
+        multiselect="{{false}}">
+        <ws:selectedKeys>
+           <ws:Array>
+              <ws:String>{{ 'type' | mutable }}</ws:String>
+           </ws:Array>
+        </ws:selectedKeys>
+        <ws:items>
+           <ws:Array>
+              <ws:Object key="{{ 0 }}" title="{[ Все ]}" />
+              <ws:Object key="{{ 1 }}" title="{[ Кроме... ]}" />
+              <ws:Object key="{{ 2 }}" title="{[ Только... ]}" />
+           </ws:Array>
+        </ws:items>
+     </SBIS3.CONTROLS.DropdownList>
+     <RecipientChoice.FiledLink class="events-Product__filedlink">
+     </RecipientChoice.FiledLink>
 </div>

@@ -1,0 +1,9 @@
+<div class="events-Checks">
+    <div class="events-Checks__name">{{ item.name }}</div>
+
+    <ws:for data="i in item.products">
+        <Events.CheckInCheck.ProductList.Product
+                item="{{i}}"/>
+    </ws:for>
+
+</div>
