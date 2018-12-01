@@ -101,7 +101,26 @@ define(
                         })
                     }
 
-                })
+                });
+
+               this.subscribeTo(this.getChildControlByName('addCheck'), 'onMenuItemActivate', (ev, id) => {
+                  if (id == 1) {
+                     // с камеры
+                     new OpenDialog({
+                        template: 'Events/WebCam/WebCam'
+                     }).execute({
+                        dialogOptions: {
+                           width: 580,
+                           resizeable: false,
+                           autoWidth: false
+                        },
+                        mode: 'dialog'
+                     });
+                  } else if (id == 2){
+                     // из файла
+                  }
+               });
+
                 var fixChecksButton = this.getChildControlByName('fixChecks')
                 var sendPayemntQuery =  this.getChildControlByName('sendPayemntQuery')
                 sendPayemntQuery.subscribe('onActivated', this.sendPaymentQueryOnActivated)
@@ -128,25 +147,6 @@ define(
                     mode: 'dialog',
                     componentOptions: options
                 })
-
-                this.subscribeTo(this.getChildControlByName('addCheck'), 'onMenuItemActivate', (ev, id) => {
-                    if (id == 1) {
-                        // с камеры
-                        new OpenDialog({
-                            template: 'Events/WebCam/WebCam'
-                        }).execute({
-                            dialogOptions: {
-                                width: 580,
-                                resizeable: false,
-                                autoWidth: false
-                             },
-                            mode: 'dialog'
-                        });
-                    } else if (id == 2){
-                        // из файла
-                    }
-                });
-
             },
 
             _initChildren: function () {
