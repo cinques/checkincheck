@@ -1,0 +1,44 @@
+<div class="RequisitesPicker">
+   <div style="display: block">
+    <p class="RequisitesPicker-text">Реквизиты:</p>
+    <SBIS3.CONTROLS.TextBox
+        name="myRequisitesTextBox"
+        class="RequisitesPicker-requisites"
+        placeholder="Введите свои реквизиты..."
+    />
+   </div>
+   <br/>
+   <div>
+    <p>Выберите платежную систему для перевода:</p>
+    <SBIS3.CONTROLS.ComboBox
+      name="ComboBox1" 
+      class="position width170"
+      selectOnClick="{{true}}"
+      idProperty="key"
+      multilineDisplay="{{true}}"
+      displayProperty="title"
+      allowEmptySelection="{{true}}"
+      itemTpl="{{myItemTpl}}"
+      selectedKey="1"
+      editable="{{false}}"
+      pickerClassName="controls-ComboBox__markDefaultItem"
+      text="Не выбрано...">
+      <ws:items>
+         <ws:Array>
+            <ws:Object key="1" title="Yandex money"/>
+            <!--<ws:Object key="2" title="Webmoney" disabled/>-->
+            <!--<ws:Object key="3" title="Qiwi" disabled/>-->
+         </ws:Array>
+      </ws:items>
+      </SBIS3.CONTROLS.ComboBox>
+   </div> 
+   <br/>
+   <div style="display: block">
+    <SBIS3.CONTROLS.Button
+        name="requisitesSubmitButton"
+        caption="Отправить"
+        primary="true"
+    />
+   </div>
+   
+</div>
