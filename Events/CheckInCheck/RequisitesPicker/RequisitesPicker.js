@@ -81,7 +81,7 @@ function(CompoundControl, dotTplFn, InformationPopupManager, UserInfo) {
                         if (res.hasOwnProperty(k)) {
                             debitor.push({
                                 debitor: k,
-                                sum: Math.round(res[k].ammount)
+                                sum: Math.round(res[k].ammount*100)
                             })
                         }
                     }
