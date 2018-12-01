@@ -117,7 +117,7 @@ define(
             sendPaymentQueryOnActivated: function(event){
                 var options = {};
                 new OpenDialog({
-                    template: 'Events/PaymentQuery/PaymentQuery'
+                    template: 'Events/CheckInCheck/PaymentQuery/PaymentQuery'
                 }).execute({
                     dialogOptions:     {
                         width: 200,
