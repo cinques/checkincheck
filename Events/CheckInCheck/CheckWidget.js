@@ -13,23 +13,6 @@ define(
   ) {
     'use strict';
 
-    var shops = [
-      {
-        name: "Пятерочка",
-        price: 5000
-      },
-
-      {
-        name: "Магнит",
-        price: 1000
-      },
-
-      {
-        name: "Глобус",
-        price: 254
-      }
-    ];
-
     var CheckWidget = BaseBlock.extend({
       _dotTplFn: template,
       $protected: {
@@ -41,20 +24,43 @@ define(
         this._initChildren();
 
         var list = this.getContainer().find(".events-CheckWidget__list");
-        for (var i = 0; i < shops.length; i++) {
-          list.append(
-            Check({
-              item: shops[i]
-            })
-          );
-        }
+        getChecksTotal(this._options.eventId).then(function (result) {
+          for (var i = 0; i < result.length; i++) {
+            list.append(
+              Check({
+                item: result[i]
+              })
+            );
+          }
+        });
+
+        // getChecksTotal(this._options.eventId).then(function (result) {
+        //   for(var i = 0; i < result.length; i++) {
+        //     new Check({
+        //       item: result[i]
+        //     })
+        //   }
+        // })
 
       },
+
+
 
       _initChildren: function () {
         this._children = {};
       }
     });
+
+    function getChecksTotal(uuId) {
+      return fetch('/payments/get_checks_total/' + uuId, {
+        method: 'GET',
+        headers: {'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+      }).then(function(res) {
+        return res.json()
+      });
+    }
 
     return CheckWidget;
   }

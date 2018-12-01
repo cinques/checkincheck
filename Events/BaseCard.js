@@ -18,6 +18,7 @@ define('Events/BaseCard',
       'WS.Data/Entity/Record',
       'WS.Data/Collection/RecordSet',
       'WS.Data/Source/SbisService',
+      'WS.Data/Query/Query',
       //endregion
       //region Events
       'Events/BaseCard/utils',
@@ -49,6 +50,7 @@ define('Events/BaseCard',
       Record,
       RecordSet,
       SbisService,
+      Query,
       //endregion
       //region Events
       eventsBaseCardUtils,
@@ -316,6 +318,20 @@ define('Events/BaseCard',
 
             // Биндим поля на контекст
             this._bindSubCtrlsPropsToCtx();
+
+             var dataQuery = new Query().where({
+                 Channel: this._options.record.get('Id'),
+                 Inheritance: true,
+             });
+
+             return new SbisService({
+                 endpoint: 'Subscriber',
+                 binding: {
+                     query: 'GetMembers'
+                 }
+             }).query(dataQuery).addCallback(function (data) {
+                 this._context.setValue('membersAll', data.getAll());
+             }.bind(this))
          },
 
          destroy: function() {

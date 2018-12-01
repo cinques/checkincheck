@@ -1,13 +1,16 @@
 .events-Check__name {
   color: #242942;
   font-weight: bold;
+  font-size: 16px;
 }
 
 .events-Check__price {
-  color: #999999;
+  color: #242942;
+  font-size: 16px;
 }
 
 .events-Check {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 4px
 }

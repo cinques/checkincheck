@@ -17,12 +17,13 @@
   background: #FFFFFF;
   border: 1px solid #BDBDBD;
   max-width: 500px;
-  padding: 8px 30px 8px 12px;
+  padding: 4px 0 8px 12px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   -webkit-box-shadow: rgba(0, 0, 0, 0.4) 0 0 12px;
   box-shadow: rgba(0, 0, 0, 0.4) 0 0 12px;
   justify-content: space-between;
+  align-items: flex-end;
 }
 
 .events-DebtDetailing__amount {
@@ -48,4 +49,9 @@
 
 .BaseCardParticipantsUsers__user-info-position--red {
   color: red;
+}
+
+.events-DebtDetailing__status {
+  display: inline-flex;
+  align-items: flex-end;
 }

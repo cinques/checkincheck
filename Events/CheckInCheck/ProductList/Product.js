@@ -22,6 +22,16 @@ define(
          init: function () {
             Product.superclass.init.apply(this);
             this._initChildren();
+
+             var dropdown = this.getChildControlByName("dropdownl");
+             this.subscribeTo(dropdown, 'onSelectedItemsChange', function (e, idlist) {
+                if(idlist[0].key == 0) {
+                    members.setEnabled(false);
+                }
+                else {
+                    members.setEnabled(true);
+                }
+             })
          },
 
          _initChildren: function () {

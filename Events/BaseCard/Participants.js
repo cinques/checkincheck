@@ -696,7 +696,7 @@ define('Events/BaseCard/Participants', [
                rs.each(function (r) {
                   r.set('amount', (Math.random() * 1000 - 500).toFixed(0));
                   r.set('detailing', {
-                     amount: (Math.random() * 1000).toFixed(0),
+                     amount: (Math.random() * 1000 - 500).toFixed(0),
                      name: ("Петя")
                   })
                });
