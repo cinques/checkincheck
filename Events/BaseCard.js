@@ -44,8 +44,8 @@ define('Events/BaseCard',
       ServerEventBus,
       ContextBinder,
       //endregion
-      //region WS.Data
-      Di,
+         //region WS.Data
+         Di,
       Record,
       RecordSet,
       SbisService,

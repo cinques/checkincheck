@@ -4,20 +4,30 @@ define(
         'Events/BaseCard/BaseBlock',
         'Events/CheckInCheck/ProductList/Product',
         'Events/CheckInCheck/CheckList/Check',
+        'SBIS3.CONTROLS/Action/OpenDialog',
         'tmpl!Events/CheckInCheck/ProductList',
+<<<<<<< HEAD
         'Events/PaymentQuery/PaymentQuery',
         'SBIS3.CONTROLS/Action/OpenDialog',
 
 
+=======
+        'Events/WebCam/WebCam',
+>>>>>>> fd1468dd57afa1927c238244aa6d6a16ce0b6236
         'css!Events/CheckInCheck/ProductList'
     ],
     function (
         BaseBlock,
         Product,
         Check,
+<<<<<<< HEAD
         template,
         PaymentQuery,
         OpenDialog
+=======
+        OpenDialog,
+        template
+>>>>>>> fd1468dd57afa1927c238244aa6d6a16ce0b6236
     ) {
         'use strict';
         var products = [
@@ -129,6 +139,24 @@ define(
                     mode: 'dialog',
                     componentOptions: options
                 })
+
+                this.subscribeTo(this.getChildControlByName('addCheck'), 'onMenuItemActivate', (ev, id) => {
+                    if (id == 1) {
+                        // с камеры
+                        new OpenDialog({
+                            template: 'Events/WebCam/WebCam'
+                        }).execute({
+                            dialogOptions: {
+                                width: 580,
+                                resizeable: false,
+                                autoWidth: false
+                             },
+                            mode: 'dialog'
+                        });
+                    } else if (id == 2){
+                        // из файла
+                    }
+                });
 
             },
 
