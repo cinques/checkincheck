@@ -8,6 +8,7 @@ define(
         'Events/CheckInCheck/PaymentQuery/PaymentQuery',
         'SBIS3.CONTROLS/Action/OpenDialog',
         'Core/EventBus',
+        'SBIS3.CONTROLS/Utils/InformationPopupManager',
         'Events/CheckInCheck/WebCam/WebCam',
         'Events/CheckInCheck/PayerChoice/PayerChoice',
         'css!Events/CheckInCheck/ProductList'
@@ -19,7 +20,8 @@ define(
         template,
         PaymentQuery,
         OpenDialog,
-        EventBus
+        EventBus,
+        InformationPopupManager
     ) {
         'use strict';
 
@@ -97,8 +99,18 @@ define(
                         fetch('/payments/uploader/', {
                             method: 'POST',
                             body: formData
-                        }).then(() => {
-                            EventBus.channel('checkChannel').notify('check.uploaded');
+                        }).then((res) => {
+                            if (res.status == 500) {
+                                InformationPopupManager.showMessageDialog({
+                                    message: 'Не удалось распознать QR-код',
+                                    status: 'error'
+                                })
+                            } else {
+                                InformationPopupManager.showNotification({
+                                    caption: 'Чек успешно загружен'
+                                })
+                                EventBus.channel('checkChannel').notify('check.uploaded');
+                            }    
                         });              
                      });
 
