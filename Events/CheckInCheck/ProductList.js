@@ -46,7 +46,7 @@ define(
                 //
                 // })
                 
-                window.__eventId = this._options.eventId
+                //window.sbisEventId = this._options.eventId
 
 
                 var self = this;

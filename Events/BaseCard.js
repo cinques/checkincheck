@@ -321,17 +321,22 @@ define('Events/BaseCard',
 
              var dataQuery = new Query().where({
                  Channel: this._options.record.get('Id'),
-                 Inheritance: true,
+                 Inheritance: true, 
              });
-
+             window.sbisEventId = this._options.record.get('Id')
+             
              return new SbisService({
                  endpoint: 'Subscriber',
                  binding: {
                      query: 'GetMembers'
                  }
              }).query(dataQuery).addCallback(function (data) {
-                 this._context.setValue('membersAll', data.getAll());
+                var dgAll = data.getAll();
+                 this._context.setValue('membersAll', dgAll);
+                 
+                 window.sbisMembers = dgAll;
              }.bind(this))
+             
          },
 
          destroy: function() {
