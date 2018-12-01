@@ -51,11 +51,18 @@ CREATE TABLE public.payments
 CREATE TABLE checks (id uuid, eventId uuid, seller text, payerId uuid);
 CREATE TABLE debitor (personId uuid, productId uuid);
 
+create table product
+( 	id uuid,
+	name text,
+	price real,
+	checkId uuid
+);
+
 ```
 4. Установить Node.js
 5. Скачать сервер с репозитория 
 `git clone https://github.com/AndreyLebedev95/initialstate.git`
 6. Перейти в папку сервера
 7. Вызвать `npm install`
-8. В файле app.js установить свой пароль и логин Postgres
+8. В файле app.js установить свой пароль и логин Postgres	
 
