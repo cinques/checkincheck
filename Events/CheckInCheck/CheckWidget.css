@@ -1,20 +1,13 @@
-.events-CheckWidget__AddCheck {
-  margin-left: 8px;
-}
-.events-CheckWidget__list {
-  margin-top: 5px;
-}
-.events-CheckWidget__list > *:not(:last-child) {
-  margin-bottom: 4px;
-}
-.events-CheckWidget__row {
-  display: flex;
-  align-items: baseline;
-}
-.events-CheckWidget__row > *:not(:last-child) {
-  margin-right: 4px;
-}
-.events-CheckWidget__name {
+.events-Check__name {
+  color: #242942;
   font-weight: bold;
-  width: 64px;
+}
+
+.events-Check__price {
+  color: #999999;
+}
+
+.events-Check {
+  display: flex;
+  justify-content: space-between;
 }

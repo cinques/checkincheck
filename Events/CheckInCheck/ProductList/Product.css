@@ -1,7 +1,0 @@
-.events-Product {
-  display: flex;
-  align-items: baseline;
-}
-.events-Product > *:not(:last-child) {
-  margin-right: 4px;
-}

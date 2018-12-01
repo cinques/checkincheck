@@ -41,8 +41,11 @@
 
 
                 <!--FIXME-->
-                <div class="events-BaseCardParticipantsUsers__user-info-position">
+                <div class="events-BaseCardParticipantsUsers__user-info-position
+                        {{ item.amount < 0 ? 'BaseCardParticipantsUsers__user-info-position--red' : 'BaseCardParticipantsUsers__user-info-position--green' }}">
+                    {{ item.amount > 0 ? '+'}}
                     {{ item.amount }}
+                    ₽
                     <Events.CheckInCheck.DebtDetailing
                        detailing="{{ item.detailing }}"
                     />

@@ -1,63 +1,61 @@
 define(
-   'Events/CheckInCheck/CheckWidget',
-   [
-      'Events/BaseCard/BaseBlock',
-      'tmpl!Events/CheckInCheck/CheckWidget/Check',
-      'tmpl!Events/CheckInCheck/CheckWidget',
-      'css!Events/CheckInCheck/CheckWidget'
-   ],
-   function (
-      BaseBlock,
-      Check,
-      template
-   ) {
-      'use strict';
+  'Events/CheckInCheck/CheckWidget',
+  [
+    'Events/BaseCard/BaseBlock',
+    'tmpl!Events/CheckInCheck/CheckWidget',
+    'tmpl!Events/CheckInCheck/CheckWidget/Check',
+    'css!Events/CheckInCheck/CheckWidget'
+  ],
+  function (
+    BaseBlock,
+    template,
+    Check
+  ) {
+    'use strict';
 
-      var data = [{
-         name: 'Пятерочка'
-      }, {
-         name: 'Глобус'
-      }];
+    var shops = [
+      {
+        name: "Пятерочка",
+        price: 5000
+      },
 
-      function getData() {
-         return new Promise(function (resolve) {
-            setTimeout(function () {
-               resolve(data);
-            }, 500);
-         })
+      {
+        name: "Магнит",
+        price: 1000
+      },
+
+      {
+        name: "Глобус",
+        price: 254
       }
+    ];
 
-      var CheckWidget = BaseBlock.extend({
-         _dotTplFn: template,
-         $protected: {
-            _options: {
-            }
-         },
+    var CheckWidget = BaseBlock.extend({
+      _dotTplFn: template,
+      $protected: {
+        _options: {}
+      },
 
-         setEnabled: function (value) {
-            CheckWidget.superclass.setEnabled.call(this, value);
-            this._children.AddCheck.setVisible(value);
-         },
+      init: function () {
+        CheckWidget.superclass.init.apply(this);
+        this._initChildren();
 
-         init: function () {
-            CheckWidget.superclass.init.apply(this);
-            this._initChildren();
+        var list = this.getContainer().find(".events-CheckWidget__list");
+        for (var i = 0; i < shops.length; i++) {
+          list.append(
+            Check({
+              item: shops[i]
+            })
+          );
+        }
 
-            getData().then(function (data) {
-               data.forEach(function (datum) {
-                  this._children.list.append(Check({item: datum}));
-               }.bind(this));
-            }.bind(this));
-         },
+      },
 
-         _initChildren: function () {
-            this._children = {
-               AddCheck: this.getChildControlByName('AddCheck'),
-               list: this.getContainer().find('.events-CheckWidget__list')
-            };
-         }
-      });
+      _initChildren: function () {
+        this._children = {};
+      }
+    });
 
-      return CheckWidget;
-   }
+    return CheckWidget;
+  }
 );
