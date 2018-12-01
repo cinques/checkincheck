@@ -47,6 +47,7 @@
                     {{ item.amount }}
                     ₽
                     <Events.CheckInCheck.DebtDetailing
+                        if="{{item.amount}}"
                        detailing="{{ item.detailing }}"
                     />
                 </div>
