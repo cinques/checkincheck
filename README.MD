@@ -46,8 +46,16 @@ CREATE TABLE public.payments
       req text,
       state integer,
       CONSTRAINT payments_pkey PRIMARY KEY (event_id, debitor, creditor)
-)
+);
+
+CREATE TABLE checks (id uuid, eventId uuid, seller text, payerId uuid);
+CREATE TABLE debitor (personId uuid, productId uuid);
+
 ```
 4. Установить Node.js
-	4.1.
+5. Скачать сервер с репозитория 
+`git clone https://github.com/AndreyLebedev95/initialstate.git`
+6. Перейти в папку сервера
+7. Вызвать `npm install`
+8. В файле app.js установить свой пароль и логин Postgres
 
