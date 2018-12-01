@@ -1,14 +1,14 @@
-define('Events/StatusButton/StatusButton', [
+define('Events/CheckInCheck/StatusButton/StatusButton', [
         
     'SBIS3.CONTROLS/CompoundControl',
     
     
      // Подключаем файл с разметкой компонента "Шапка".
-    'tmpl!Events/StatusButton/StatusButton',
+    'tmpl!Events/CheckInCheck/StatusButton/StatusButton',
     'SBIS3.CONTROLS/Button',
 
     // Подключаем CSS-файл со стилевым оформлением компонента.
-    'css!Events/StatusButton/StatusButton',
+    'css!Events/CheckInCheck/StatusButton/StatusButton',
 
     
 ],

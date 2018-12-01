@@ -1,11 +1,11 @@
-define('Events/RequisitesPicker/RequisitesPicker', [
+define('Events/CheckInCheck/RequisitesPicker/RequisitesPicker', [
     'SBIS3.CONTROLS/CompoundControl',
-    'tmpl!Events/RequisitesPicker/RequisitesPicker',
+    'tmpl!Events/CheckInCheck/RequisitesPicker/RequisitesPicker',
 
     'SBIS3.CONTROLS/Utils/InformationPopupManager',
     'Core/UserInfo',
 
-    'css!Events/RequisitesPicker/RequisitesPicker',
+    'css!Events/CheckInCheck/RequisitesPicker/RequisitesPicker',
 ],
 
 //Компонент для "Запроса денег"

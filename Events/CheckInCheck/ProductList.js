@@ -5,9 +5,9 @@ define(
         'Events/CheckInCheck/ProductList/Product',
         'Events/CheckInCheck/CheckList/Check',
         'tmpl!Events/CheckInCheck/ProductList',
-        'Events/PaymentQuery/PaymentQuery',
+        'Events/CheckInCheck/PaymentQuery/PaymentQuery',
         'SBIS3.CONTROLS/Action/OpenDialog',
-        'Events/WebCam/WebCam',
+        'Events/CheckInCheck/WebCam/WebCam',
         'css!Events/CheckInCheck/ProductList'
     ],
     function (

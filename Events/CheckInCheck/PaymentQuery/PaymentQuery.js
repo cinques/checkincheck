@@ -1,16 +1,16 @@
-define('Events/PaymentQuery/PaymentQuery', [
+define('Events/CheckInCheck/PaymentQuery/PaymentQuery', [
         
         'SBIS3.CONTROLS/CompoundControl',
         
         
          // Подключаем файл с разметкой компонента "Шапка".
-        'tmpl!Events/PaymentQuery/PaymentQuery',
+        'tmpl!Events/CheckInCheck/PaymentQuery/PaymentQuery',
 
         'SBIS3.CONTROLS/Action/OpenDialog',
-        'Events/RequisitesPicker/RequisitesPicker',
+        'Events/CheckInCheck/RequisitesPicker/RequisitesPicker',
 
         // Подключаем CSS-файл со стилевым оформлением компонента.
-        'css!Events/PaymentQuery/PaymentQuery',
+        'css!Events/CheckInCheck/PaymentQuery/PaymentQuery',
 
         
     ],
@@ -32,7 +32,7 @@ define('Events/PaymentQuery/PaymentQuery', [
                 pqSubmitButton.subscribe('onActivated', function (event){
                 var options = {};
                 new OpenDialog({
-                    template: 'Events/RequisitesPicker/RequisitesPicker'
+                    template: 'Events/CheckInCheck/RequisitesPicker/RequisitesPicker'
                 }).execute({
                     dialogOptions: {
                         width: 780,
