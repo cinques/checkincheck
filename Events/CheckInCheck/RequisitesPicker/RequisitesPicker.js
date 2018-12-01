@@ -4,12 +4,13 @@ define('Events/CheckInCheck/RequisitesPicker/RequisitesPicker', [
 
     'SBIS3.CONTROLS/Utils/InformationPopupManager',
     'Core/UserInfo',
+    'WS.Data/Source/SbisService',
 
     'css!Events/CheckInCheck/RequisitesPicker/RequisitesPicker',
 ],
 
 //Компонент для "Запроса денег"
-function(CompoundControl, dotTplFn, InformationPopupManager, UserInfo) {
+function(CompoundControl, dotTplFn, InformationPopupManager, UserInfo, SbisService) {
 
     var RequisitesPicker = CompoundControl.extend({
         _dotTplFn: dotTplFn,
@@ -52,14 +53,14 @@ function(CompoundControl, dotTplFn, InformationPopupManager, UserInfo) {
         AcceptRequisites: function (){
             //Получить event id
             //var eventId = '174ce304-ffd4-4b16-9d34-99c87a9334e7';
-            var eventId = window.sbisEventId
-            //alert(eventId);
-
-            var membersArray = window.sbisMembers.toArray();
-            var members = [];
+            var
+                eventId = window.sbisEventId,
+                self = this,
+                membersArray = window.sbisMembers.toArray(),
+                members = [];
             membersArray.forEach(function(el) {
                 members.push(el.get('Subscriber'));
-            })
+            });
             //Запрос на получение creditor, debitor, sum
             var requisites = window.tmpRequisitesPickerRequisiter;
             //alert(requisites)
@@ -94,7 +95,7 @@ function(CompoundControl, dotTplFn, InformationPopupManager, UserInfo) {
                         state: 0,
                         debitor,
                         req: requisites,       
-                    })
+                    });
                     fetch('/paymentService/add_payment', {
                         method: 'POST',
                         headers: {
@@ -102,36 +103,52 @@ function(CompoundControl, dotTplFn, InformationPopupManager, UserInfo) {
                         },
                         body: paymentsData
                     }).then(result => {
-                        debugger;
                     }).catch(err => {
-                        debugger;
                     });
+
+                    for(var i in debitor) {
+                        if(debitor.hasOwnProperty(i)) {
+                            debugger;
+                            self.sendMessage(eventId, requisites, debitor[i].sum, debitor[i].debitor);
+                        }
+                    }
                 })
              });
 
 
-
-
-            
-            
             //alert(uISF)
             //Отсылаем запрос на добавление платежей
           
-            
 
-            
+        },
+
+        sendMessage: function(eventId, requisites, sum, memberId) {
+            function createYandexMoneyURL(requisites, sum) {
+                return ("https://money.yandex.ru/transfer?receiver=" + requisites + "&sum=" +
+                    sum + "&successURL=https%3A%2F%2Fmoney.yandex.ru%2Fquickpay%2Fbutton-widget%3Ftargets%3D%25D0%259E%25D0%25BF%25D0%25BB%25D0%25B0%25D1%2582%25D0%25B0%2520%25D1%2587%25D0%25B5%25D0%25BA%25D0%25B0%26default-sum%3D" +
+                    sum + "%26button-text%3D11%26any-card-payment-type%3Don%26button-size%3Dm%26button-color%3Dorange%26successURL%3D%26quickpay%3Dsmall%26account%3D" +
+                    requisites + "&quickpay-back-url=https%3A%2F%2Fmoney.yandex.ru%2Fquickpay%2Fbutton-widget%3Ftargets%3D%25D0%259E%25D0%25BF%25D0%25BB%25D0%25B0%25D1%2582%25D0%25B0%2520%25D1%2587%25D0%25B5%25D0%25BA%25D0%25B0%26default-sum%3D" +
+                    sum + "%26button-text%3D11%26any-card-payment-type%3Don%26button-size%3Dm%26button-color%3Dorange%26successURL%3D%26quickpay%3Dsmall%26account%3D"+
+                    requisites + "%20чека&form-comment=Оплата%20чека&short-dest=&quickpay-form=small");
+            }
+
+            new SbisService({
+                endpoint: 'Персона'
+            }).call('СОтправить', {
+                'Текст':      createYandexMoneyURL(requisites, sum),
+                'Документ':   eventId,
+                'Диалог':     null,
+                'Получатели': memberId,
+                'Файлы':      [],
+                'Сообщение': null
+            }).addCallback(function (res) {
+            }).addErrback(function (err) {
+            });
         }
 
-        
-
-
-
-
-
-
-    })
+    });
 
 
     return RequisitesPicker
 }
-)
+);
