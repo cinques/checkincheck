@@ -50,7 +50,7 @@ define(
                   }));
                }
             });
-             members.setSelectedItems(selected);
+            selected.getCount() && members.setSelectedItems(selected);
 
 
              window.kek = members
