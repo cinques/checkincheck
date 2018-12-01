@@ -40,7 +40,7 @@ define(
             var membersAll = this._context.getValue('membersAll');
             var selected = new RecordSet();
             membersAll.each(m => {
-               if (~m.get('Subscriber').indexOf(this._options.item.persons)) {
+               if (~this._options.item.persons.indexOf(m.get('Subscriber'))) {
                   selected.add(new Model({
                      rawData: {
                         Subscriber: m.get("Subscriber"),
