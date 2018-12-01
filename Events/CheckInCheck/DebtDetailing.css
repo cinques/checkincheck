@@ -1,5 +1,9 @@
 .events-BaseCardParticipantsUsers__user-info-position:hover .events-DebtDetailing {
-  display: flex;
+  display: block;
+}
+
+.events-BaseCardParticipantsUsers__user-info-name, .events-BaseCardParticipantsUsers__user-info-position {
+  overflow: visible !important;
 }
 
 .events-BaseCardParticipantsUsers .controls-CompositeView .controls-CompositeView__itemsContainer {
@@ -12,7 +16,7 @@
 
 .events-DebtDetailing {
   display: none;
-  position: relative;
+  position: absolute;
   z-index: 29999;
   background: #FFFFFF;
   border: 1px solid #BDBDBD;
@@ -24,6 +28,11 @@
   box-shadow: rgba(0, 0, 0, 0.4) 0 0 12px;
   justify-content: space-between;
   align-items: flex-end;
+}
+
+.events-DebtDetailing__list {
+  display: flex;
+  flex-direction: column;
 }
 
 .events-DebtDetailing__amount {
@@ -54,4 +63,10 @@
 .events-DebtDetailing__status {
   display: inline-flex;
   align-items: flex-end;
+}
+
+.events-DebtDetailing__row {
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: space-between;
 }

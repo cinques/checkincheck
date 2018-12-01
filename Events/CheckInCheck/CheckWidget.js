@@ -45,7 +45,6 @@ define(
       },
 
 
-
       _initChildren: function () {
         this._children = {};
       }
@@ -54,10 +53,11 @@ define(
     function getChecksTotal(uuId) {
       return fetch('/payments/get_checks_total/' + uuId, {
         method: 'GET',
-        headers: {'Accept': 'application/json',
+        headers: {
+          'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-      }).then(function(res) {
+      }).then(function (res) {
         return res.json()
       });
     }

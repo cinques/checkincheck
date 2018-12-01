@@ -22,16 +22,17 @@ define(
          init: function () {
             Product.superclass.init.apply(this);
             this._initChildren();
-
+             var members = this.getChildControlByName("fieldl");
              var dropdown = this.getChildControlByName("dropdownl");
              this.subscribeTo(dropdown, 'onSelectedItemsChange', function (e, idlist) {
-                if(idlist[0].key == 0) {
+                if(idlist[0] == 0) {
                     members.setEnabled(false);
                 }
                 else {
                     members.setEnabled(true);
                 }
-             })
+             });
+             window.kek = members
          },
 
          _initChildren: function () {
