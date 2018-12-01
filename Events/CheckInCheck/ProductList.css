@@ -5,21 +5,25 @@
 .events-Product__name {
     color: #242942;
     font-weight: bold;
-    padding-left: 10px;
+    margin-left: 10px;
+    width: 60px;
 }
 
 .events-Product__price {
-    padding-left: 10px;
+    font-size: 14px;
+    margin-left: 10px;
+    width: 50px;
 }
 .events-Product__dropdown {
-    padding-left: 10px;
-
-    max-width: 80px;
+    margin-left: 30px;
+    width: 60px;
 }
 
 .events-Product__filedlink {
-    padding-left: 10px;
     height: 30px;
+    width: 190px;
+    margin-left: 15px;
+
 }
 .events-Product {
     padding: 5px;
@@ -27,8 +31,13 @@
     padding-right: 10px;
     display: inline-flex;
     align-items: flex-end;
-    justify-content: space-between;
-    width: 430px;
+    width: 410px;
     font-size: 16px;
+}
+
+.events-ProductList__btn_container {
+    display: flex;
+    justify-content: right;
+
 }
 

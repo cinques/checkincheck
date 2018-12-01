@@ -19,59 +19,14 @@ define(
         OpenDialog,
     ) {
         'use strict';
-        var products = [
-            {
-                name: "Checkname1",
-                sum: 400,
-                products: [
-                    {
-                        name: "milk",
-                        price: 300
-                    },
-                    {
-                        name: "bear",
-                        price: 50
-                    },
-                    {
-                        name: "bread",
-                        price: 50
-                    }
-                ]
-            },
-            {
-                name: 'Checkname2',
-                sum: 100,
-                products: [
-                    {
-                        name: "Meal",
-                        price: 50
-                    },
-                    {
-                        name: "Bread",
-                        price: 10
-                    },
-                    {
-                        name: "Juice",
-                        price: 10
-                    },
-                    {
-                        name: "Cheese",
-                        price: 30
-                    }
 
-
-                ]
-            }
-                ];
-
-        function getData() {
-            var promise = new Promise(function (resolve, reject) {
-                setTimeout(function () {
-                    resolve(products);
-                }, 1000);
-
-            });
-            return promise;
+        function getData(eventId) {
+            return fetch('/payments/get_event_products/' + eventId, {
+                method: 'GET',
+                headers: {'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+            }).then(function(res) { return res.json()});
         }
 
         var ProductList = BaseBlock.extend({
@@ -91,7 +46,7 @@ define(
                 // })
                 var self = this
                 var list = this.getContainer().find(".events-ProductList__list");
-                getData().then(function (result) {
+                getData(this._options.eventId).then(function (result) {
 
                     for( var i = 0; i< result.length; i++) {
                         new Check({
