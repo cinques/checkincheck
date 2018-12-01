@@ -4,12 +4,14 @@ define(
     'Events/BaseCard/BaseBlock',
     'tmpl!Events/CheckInCheck/CheckWidget',
     'tmpl!Events/CheckInCheck/CheckWidget/Check',
+     'Core/EventBus',
     'css!Events/CheckInCheck/CheckWidget'
   ],
   function (
     BaseBlock,
     template,
-    Check
+    Check,
+    EventBus
   ) {
     'use strict';
 
@@ -23,27 +25,27 @@ define(
         CheckWidget.superclass.init.apply(this);
         this._initChildren();
 
-        var list = this.getContainer().find(".events-CheckWidget__list");
-        getChecksTotal(this._options.eventId).then(function (result) {
-          for (var i = 0; i < result.length; i++) {
-            list.append(
-              Check({
-                item: result[i]
-              })
-            );
-          }
-        });
-
-        // getChecksTotal(this._options.eventId).then(function (result) {
-        //   for(var i = 0; i < result.length; i++) {
-        //     new Check({
-        //       item: result[i]
-        //     })
-        //   }
-        // })
-
+         this.reload();
+         this.subscribeTo(
+            EventBus.channel('checkChannel'),
+            'check.uploaded',
+            this.reload.bind(this)
+         );
       },
 
+       reload: function () {
+          var list = this.getContainer().find(".events-CheckWidget__list");
+          list.empty();
+          getChecksTotal(this._options.eventId).then(function (result) {
+             for (var i = 0; i < result.length; i++) {
+                list.append(
+                   Check({
+                      item: result[i]
+                   })
+                );
+             }
+          });
+       },
 
       _initChildren: function () {
         this._children = {};

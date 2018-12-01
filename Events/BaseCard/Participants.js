@@ -280,6 +280,12 @@ define('Events/BaseCard/Participants', [
        */
       _bindHandlers: function() {
 
+         this.subscribeTo(
+            EventBus.channel('checkChannel'),
+            'check.uploaded',
+            this._updateRootFolders.bind(this)
+         );
+
          // Перед сменой областей сохраняем id текущей вкладки
          this.subscribeTo(this._controls.switchArea, 'onBeforeChangeActiveArea', this._onBeforeChangeActiveArea.bind(this));
 
