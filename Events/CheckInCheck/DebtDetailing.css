@@ -35,13 +35,10 @@
   flex-direction: column;
 }
 
-.events-DebtDetailing__amount {
-
-}
-
 .events-DebtDetailing__name {
   color: #242942;
   font-weight: bold;
+  margin-right: 10px;
 }
 
 .events-DebtDetailing__amount--green {

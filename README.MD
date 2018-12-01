@@ -58,6 +58,8 @@ create table product
 	checkId uuid
 );
 
+CREATE TABLE fixed (event_id uuid, state boolean)
+
 ```
 4. Установить Node.js
 5. Скачать сервер с репозитория 
