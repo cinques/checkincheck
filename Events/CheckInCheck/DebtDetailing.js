@@ -21,7 +21,7 @@ define(
 
          init: function () {
             DebtDetailing.superclass.init.apply(this);
-            this._initChildren();
+            // this._initChildren();
          },
 
          _initChildren: function () {
@@ -31,5 +31,18 @@ define(
       });
 
       return DebtDetailing;
+
+      function setData() {
+        return fetch('/upload', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            checkId: 1,
+            payerId: 103,
+          })
+        })
+      }
    }
 );
