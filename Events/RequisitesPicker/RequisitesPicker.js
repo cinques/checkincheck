@@ -47,6 +47,7 @@ function(CompoundControl, dotTplFn, InformationPopupManager, UserInfo) {
         //Вызывается если пользователь проверил и принял указаные реквизиты
         AcceptRequisites: function (){
             var uISF = UserInfo.get('ИдентификаторСервисаПрофилей')
+            
             alert(uISF)
         }
 
