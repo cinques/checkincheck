@@ -688,20 +688,51 @@ define('Events/BaseCard/Participants', [
                query: 'GetGroupMembers'
             }
          }).query(dataQuery).addCallback(function (result) {
-            var folders = result.getAll();
-            folders.each(function (g) {
-               var rs = g.get('items');
-               rs.addField({name: 'amount', type: 'string'});
-               rs.addField({name: 'detailing', type: 'object'});
-               rs.each(function (r) {
-                  r.set('amount', (Math.random() * 1000 - 500).toFixed(0));
-                  r.set('detailing', {
-                     amount: (Math.random() * 1000 - 500).toFixed(0),
-                     name: ("Петя")
+            var members = self._context.getValue('membersAll');
+            var a = [];
+            members.each(m => a.push(m.get('Subscriber')));
+
+            var names = {};
+            members.each(m => { names[m.get('Subscriber')] = m.get("SubscriberName") });
+
+            var d = new Deferred();
+
+            fetch('/payments/get_debitor_list/', {
+               method: 'POST',
+               headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+               },
+               body: JSON.stringify({
+                  eventId: self._options.eventId,
+                  members: a
+               })
+            }).then(r => r.json()).then(function (res) {
+               var json = res;
+
+               var records = [];
+               var folders = result.getAll();
+               folders.each(function (g) {
+                  var rs = g.get('items');
+                  rs.addField({name: 'amount', type: 'string'});
+                  rs.addField({name: 'detailing', type: 'object'});
+                  rs.each(function (r) {
+                     records.push(r);
+                  });
+               });
+
+               Object.keys(json).forEach(k => {
+                  records.forEach(r => {
+                     if (r.get('Subscriber') === k) {
+                        r.set('amount', json[k].ammount);
+                        var detailing = Object.keys(json[k].detail).map(d => ({name: names[d], amount: json[k].detail[d].ammount }))
+                        r.set('detailing', detailing);
+                     }
                   })
                });
-            });
-            return folders;
+               d.callback(folders);
+            })
+            return d;
          }).addCallback(function(result) {
             var
                foldersAll = result,
