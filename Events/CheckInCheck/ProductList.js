@@ -68,12 +68,13 @@ define(
                        eventId: self._options.eventId
                     });
                  }
-
+                self._notify('onProductsLoad');
               });
            },
 
             init: function () {
                 ProductList.superclass.init.apply(this);
+                
                 this._initChildren();
                 // var check = getList().then(function (result) {
                 //
@@ -86,6 +87,8 @@ define(
                    'check.uploaded',
                    this.reload.bind(this)
                 );
+                this.subscribe('onReady', this.onReadyHandler);
+                this.subscribe('onProductsLoad', this.onProductsLoadHandler);
 
                 var fileuplod = document.getElementById('fileuplod');
                 var payerId;     
@@ -169,12 +172,59 @@ define(
                 var sendPayemntQuery =  this.getChildControlByName('sendPayemntQuery')
                 sendPayemntQuery.subscribe('onActivated', this.sendPaymentQueryOnActivated.bind(this))
                 this.subscribeTo(fixChecksButton, 'onActivated', function(){
+                    //Фиксируем изменения при нажатии на кнопку "Зафиксировать"
+                    fetch('/paymentService/to_fix', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            event_id: this.getParent()._options.eventId,
+                        })
+                    }).then(result => {
+                        //Отключить компоненты
+                        this.getParent().getChildControls().forEach(function(x) { x.setEnabled(false) } )
+                        //Включить кнопку 
+                        sendPayemntQuery.setEnabled(true)
 
-                    self.getChildControls().forEach(function(x) { x.setEnabled(false) } )
-                    sendPayemntQuery.setEnabled(true)
+                    }).catch(err => {
+                    });
+
+
+                    
                    
                 })
 
+            },
+            onProductsLoadHandler: function() {
+                var self = this;
+                fetch('/paymentService/is_fixed', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        event_id: this._options.eventId,
+                    })
+                }).then(result => {
+                    //Отключить компоненты
+                    result.json().then(function(res) {
+                        if (res){
+                            // this.setEnabled(false);
+                            self.getChildControls().forEach(function(x) { x.setEnabled(false) } );
+                            // //Включить кнопку 
+                            sendPayemntQuery = self.getChildControlByName('sendPayemntQuery').setEnabled(true);
+                        }  
+                    })
+
+                }).catch(err => {
+                });
+            },
+
+            onReadyHandler: function(event){
+                //Блочим контролы если ранее нажата была кнопка зафиксировать
+                var self = this;
+                
             },
 
             sendPaymentQueryOnActivated: function(event){
