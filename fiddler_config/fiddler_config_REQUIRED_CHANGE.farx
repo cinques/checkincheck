@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AutoResponder LastSave="2018-12-01T10:15:54.032936+03:00" FiddlerVersion="5.0.20182.28034">
+  <State Enabled="true" Fallthrough="true" UseLatency="false">
+    <ResponseRule Match="https://fix-static1-online.sbis.ru/resources/Events/PaymentQuery/PaymentQuery.js" Action="C:\Users\User\Desktop\checkincheck\Events\PaymentQuery\PaymentQuery.js" Enabled="true" />
+    <ResponseRule Match="https://fix-online.sbis.ru/resources/Events/PaymentQuery/PaymentQuery.tmpl" Action="C:\Users\User\Desktop\checkincheck\Events\PaymentQuery\PaymentQuery.tmpl" Enabled="true" />
+    <ResponseRule Match="https://fix-online.sbis.ru/resources/Events/RequisitesPicker/RequisitesPicker.tmpl" Action="C:\Users\User\Desktop\checkincheck\Events\RequisitesPicker\RequisitesPicker.tmpl" Enabled="true" />
+    <ResponseRule Match="https://fix-static1-online.sbis.ru/resources/Events/RequisitesPicker/RequisitesPicker.js" Action="C:\Users\User\Desktop\checkincheck\Events\RequisitesPicker\RequisitesPicker.js" Enabled="true" />
+    <ResponseRule Match="https://fix-online.sbis.ru/resources/Events/RequisitesPicker/RequisitesPicker.css" Action="C:\Users\User\Desktop\checkincheck\Events\RequisitesPicker\RequisitesPicker.css" Enabled="true" />
+    <ResponseRule Match="https://fix-online.sbis.ru/resources/Events/PaymentQuery/PaymentQuery.css" Action="C:\Users\User\Desktop\checkincheck\Events\PaymentQuery\PaymentQuery.css" Enabled="true" />
+  </State>
+</AutoResponder>

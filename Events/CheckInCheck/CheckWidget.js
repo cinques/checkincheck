@@ -1,34 +1,61 @@
 define(
-   'Events/CheckInCheck/CheckWidget',
-   [
-      'Events/BaseCard/BaseBlock',
-      'tmpl!Events/CheckInCheck/CheckWidget',
-      'css!Events/CheckInCheck/CheckWidget'
-   ],
-   function (
-      BaseBlock,
-      template
-   ) {
-      'use strict';
+  'Events/CheckInCheck/CheckWidget',
+  [
+    'Events/BaseCard/BaseBlock',
+    'tmpl!Events/CheckInCheck/CheckWidget',
+    'tmpl!Events/CheckInCheck/CheckWidget/Check',
+    'css!Events/CheckInCheck/CheckWidget'
+  ],
+  function (
+    BaseBlock,
+    template,
+    Check
+  ) {
+    'use strict';
 
-      var CheckWidget = BaseBlock.extend({
-         _dotTplFn: template,
-         $protected: {
-            _options: {
-            }
-         },
+    var shops = [
+      {
+        name: "Пятерочка",
+        price: 5000
+      },
 
-         init: function () {
-            CheckWidget.superclass.init.apply(this);
-            this._initChildren();
-         },
+      {
+        name: "Магнит",
+        price: 1000
+      },
 
-         _initChildren: function () {
-            this._children = {
-            };
-         }
-      });
+      {
+        name: "Глобус",
+        price: 254
+      }
+    ];
 
-      return CheckWidget;
-   }
+    var CheckWidget = BaseBlock.extend({
+      _dotTplFn: template,
+      $protected: {
+        _options: {}
+      },
+
+      init: function () {
+        CheckWidget.superclass.init.apply(this);
+        this._initChildren();
+
+        var list = this.getContainer().find(".events-CheckWidget__list");
+        for (var i = 0; i < shops.length; i++) {
+          list.append(
+            Check({
+              item: shops[i]
+            })
+          );
+        }
+
+      },
+
+      _initChildren: function () {
+        this._children = {};
+      }
+    });
+
+    return CheckWidget;
+  }
 );

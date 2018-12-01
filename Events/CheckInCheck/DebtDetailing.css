@@ -1,0 +1,51 @@
+.events-BaseCardParticipantsUsers__user-info-position:hover .events-DebtDetailing {
+  display: flex;
+}
+
+.events-BaseCardParticipantsUsers .controls-CompositeView .controls-CompositeView__itemsContainer {
+  overflow: visible;
+}
+
+.events-BaseCardParticipants .controls-ListView .controls-ListView__item {
+  overflow: visible;
+}
+
+.events-DebtDetailing {
+  display: none;
+  position: relative;
+  z-index: 29999;
+  background: #FFFFFF;
+  border: 1px solid #BDBDBD;
+  max-width: 500px;
+  padding: 8px 30px 8px 12px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.4) 0 0 12px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0 0 12px;
+  justify-content: space-between;
+}
+
+.events-DebtDetailing__amount {
+
+}
+
+.events-DebtDetailing__name {
+  color: #242942;
+  font-weight: bold;
+}
+
+.events-DebtDetailing__amount--green {
+  color: green;
+}
+
+.events-DebtDetailing__amount--red {
+  color: red;
+}
+
+.BaseCardParticipantsUsers__user-info-position--green {
+  color:green;
+}
+
+.BaseCardParticipantsUsers__user-info-position--red {
+  color: red;
+}
