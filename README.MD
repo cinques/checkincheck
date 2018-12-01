@@ -11,6 +11,7 @@ https://wi.sbis.ru/docs/js/icons/?v=3.18.700
 
 ## Установка
 1. Настроить Fiddler
+	1.1. fiddler_config_REQUIRED_CHANGE.farx в нем поменять пути до файлов
 2. Вызвать что-то вроде:
 ```javascript
     require([
@@ -32,3 +33,21 @@ https://wi.sbis.ru/docs/js/icons/?v=3.18.700
        })
     });
 ```
+
+3. Установить PostgreSQL
+    Вызвать скрипт создания таблиц:
+```sql
+CREATE TABLE public.payments
+(
+      event_id uuid NOT NULL,
+      debitor uuid NOT NULL,
+      creditor uuid NOT NULL,
+      sum integer,
+      req text,
+      state integer,
+      CONSTRAINT payments_pkey PRIMARY KEY (event_id, debitor, creditor)
+)
+```
+4. Установить Node.js
+	4.1.
+

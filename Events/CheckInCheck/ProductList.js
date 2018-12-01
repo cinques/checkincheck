@@ -6,15 +6,28 @@ define(
         'Events/CheckInCheck/CheckList/Check',
         'SBIS3.CONTROLS/Action/OpenDialog',
         'tmpl!Events/CheckInCheck/ProductList',
+<<<<<<< HEAD
+        'Events/PaymentQuery/PaymentQuery',
+        'SBIS3.CONTROLS/Action/OpenDialog',
+
+
+=======
         'Events/WebCam/WebCam',
+>>>>>>> fd1468dd57afa1927c238244aa6d6a16ce0b6236
         'css!Events/CheckInCheck/ProductList'
     ],
     function (
         BaseBlock,
         Product,
         Check,
+<<<<<<< HEAD
+        template,
+        PaymentQuery,
+        OpenDialog
+=======
         OpenDialog,
         template
+>>>>>>> fd1468dd57afa1927c238244aa6d6a16ce0b6236
     ) {
         'use strict';
         var products = [
@@ -87,16 +100,44 @@ define(
                 // var check = getList().then(function (result) {
                 //
                 // })
+                var self = this
                 var list = this.getContainer().find(".events-ProductList__list");
                 getData().then(function (result) {
 
                     for( var i = 0; i< result.length; i++) {
                         new Check({
                             element: $('<div></div>').appendTo(list),
-                            item: result[i]
+                            item: result[i],
+                            parent: self,
                         })
                     }
 
+                })
+                var fixChecksButton = this.getChildControlByName('fixChecks')
+                var sendPayemntQuery =  this.getChildControlByName('sendPayemntQuery')
+                sendPayemntQuery.subscribe('onActivated', this.sendPaymentQueryOnActivated)
+                this.subscribeTo(fixChecksButton, 'onActivated', function(){
+
+                    self.getChildControls().forEach(function(x) { x.setEnabled(false) } )
+                    sendPayemntQuery.setEnabled(true)
+                   
+                })
+
+            },
+
+            sendPaymentQueryOnActivated: function(event){
+                var options = {};
+                new OpenDialog({
+                    template: 'Events/PaymentQuery/PaymentQuery'
+                }).execute({
+                    dialogOptions:     {
+                        width: 200,
+                        resizeable: false,
+                        autoWidth: false,
+                        title: "Запрос денег",
+                    },
+                    mode: 'dialog',
+                    componentOptions: options
                 })
 
                 this.subscribeTo(this.getChildControlByName('addCheck'), 'onMenuItemActivate', (ev, id) => {
