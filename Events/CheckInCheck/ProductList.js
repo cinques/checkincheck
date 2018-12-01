@@ -97,7 +97,6 @@ define(
                         eventId: this._options.eventId,
                         handlers: {
                             onChoice: function (event, _payerId) {
-                                debugger;
                                 payerId = _payerId;
                                if (id == 1) {
                                         // с камеры
