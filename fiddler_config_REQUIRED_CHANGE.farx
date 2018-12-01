@@ -1,11 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<AutoResponder LastSave="2018-12-01T10:15:54.032936+03:00" FiddlerVersion="5.0.20182.28034">
+<AutoResponder LastSave="2018-12-01T15:38:24.6299779+03:00" FiddlerVersion="5.0.20182.28034">
   <State Enabled="true" Fallthrough="true" UseLatency="false">
-    <ResponseRule Match="https://fix-static1-online.sbis.ru/resources/Events/PaymentQuery/PaymentQuery.js" Action="C:\Users\User\Desktop\checkincheck\Events\PaymentQuery\PaymentQuery.js" Enabled="true" />
-    <ResponseRule Match="https://fix-online.sbis.ru/resources/Events/PaymentQuery/PaymentQuery.tmpl" Action="C:\Users\User\Desktop\checkincheck\Events\PaymentQuery\PaymentQuery.tmpl" Enabled="true" />
-    <ResponseRule Match="https://fix-online.sbis.ru/resources/Events/RequisitesPicker/RequisitesPicker.tmpl" Action="C:\Users\User\Desktop\checkincheck\Events\RequisitesPicker\RequisitesPicker.tmpl" Enabled="true" />
-    <ResponseRule Match="https://fix-static1-online.sbis.ru/resources/Events/RequisitesPicker/RequisitesPicker.js" Action="C:\Users\User\Desktop\checkincheck\Events\RequisitesPicker\RequisitesPicker.js" Enabled="true" />
-    <ResponseRule Match="https://fix-online.sbis.ru/resources/Events/RequisitesPicker/RequisitesPicker.css" Action="C:\Users\User\Desktop\checkincheck\Events\RequisitesPicker\RequisitesPicker.css" Enabled="true" />
-    <ResponseRule Match="https://fix-online.sbis.ru/resources/Events/PaymentQuery/PaymentQuery.css" Action="C:\Users\User\Desktop\checkincheck\Events\PaymentQuery\PaymentQuery.css" Enabled="true" />
+    <ResponseRule Match="regex:https://.*-online.sbis.ru/resources/Events/CheckInCheck/*" Action="C:\Users\User\Desktop\checkincheck\checkincheck\Events\CheckInCheck\" Enabled="true" />
+    <ResponseRule Match="regex:https://.*-online.sbis.ru/resources/Events/BaseCard/Participants/Users/templates/user\.tmpl" Action="C:\Users\User\Desktop\checkincheck\checkincheck\Events\BaseCard\Participants\Users\templates\user.tmpl" Enabled="true" />
+    <ResponseRule Match="regex:https://.*-online.sbis.ru/resources/Events/BaseCard/tmpls/sidebar\.tmpl" Action="C:\Users\User\Desktop\checkincheck\checkincheck\Events\BaseCard\tmpls\sidebar.tmpl" Enabled="true" />
+    <ResponseRule Match="regex:https://.*-online.sbis.ru/resources/Events/BaseCard/Participants\.js" Action="C:\Users\User\Desktop\checkincheck\checkincheck\Events\BaseCard\Participants.js" Enabled="true" />
+    <ResponseRule Match="regex:https://.*-online.sbis.ru/resources/Events/BaseCard\.js" Action="C:\Users\User\Desktop\checkincheck\checkincheck\Events\BaseCard.js" Enabled="true" />
+    <ResponseRule Match="regex:https://.*-online.sbis.ru/resources/Events/BaseCard\.tmpl" Action="C:\Users\User\Desktop\checkincheck\checkincheck\Events\BaseCard.tmpl" Enabled="true" />
+    <ResponseRule Match="https://fix-static1-online.sbis.ru/resources/Events/PaymentQuery/PaymentQuery.js" Action="C:\Users\User\Desktop\checkincheck\checkincheck\Events\PaymentQuery\PaymentQuery.js" Enabled="true" />
+    <ResponseRule Match="https://fix-online.sbis.ru/resources/Events/PaymentQuery/PaymentQuery.tmpl" Action="C:\Users\User\Desktop\checkincheck\checkincheck\Events\PaymentQuery\PaymentQuery.tmpl" Enabled="true" />
+    <ResponseRule Match="https://fix-online.sbis.ru/resources/Events/RequisitesPicker/RequisitesPicker.tmpl" Action="C:\Users\User\Desktop\checkincheck\checkincheck\Events\RequisitesPicker\RequisitesPicker.tmpl" Enabled="true" />
+    <ResponseRule Match="https://fix-static1-online.sbis.ru/resources/Events/RequisitesPicker/RequisitesPicker.js" Action="C:\Users\User\Desktop\checkincheck\checkincheck\Events\RequisitesPicker\RequisitesPicker.js" Enabled="true" />
+    <ResponseRule Match="https://fix-online.sbis.ru/resources/Events/RequisitesPicker/RequisitesPicker.css" Action="C:\Users\User\Desktop\checkincheck\checkincheck\Events\RequisitesPicker\RequisitesPicker.css" Enabled="true" />
+    <ResponseRule Match="https://fix-online.sbis.ru/resources/Events/PaymentQuery/PaymentQuery.css" Action="C:\Users\User\Desktop\checkincheck\checkincheck\Events\PaymentQuery\PaymentQuery.css" Enabled="true" />
+    <ResponseRule Match="https://fix-static1-online.sbis.ru/resources/Events/StatusButton/StatusButton.js" Action="C:\Users\User\Desktop\checkincheck\checkincheck\Events\StatusButton\StatusButton.js" Enabled="true" />
+    <ResponseRule Match="https://fix-online.sbis.ru/resources/Events/StatusButton/StatusButton.tmpl" Action="C:\Users\User\Desktop\checkincheck\checkincheck\Events\StatusButton\StatusButton.tmpl" Enabled="true" />
+    <ResponseRule Match="https://fix-online.sbis.ru/resources/Events/StatusButton/StatusButton.css" Action="C:\Users\User\Desktop\checkincheck\checkincheck\Events\StatusButton\StatusButton.css" Enabled="true" />
+    <ResponseRule Match="regex:^https://fix-online.sbis.ru/paymentService/(.*)" Action="http://localhost:3000/$1" Enabled="true" />
   </State>
 </AutoResponder>
