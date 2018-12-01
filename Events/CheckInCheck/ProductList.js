@@ -48,6 +48,9 @@ define(
                 // var check = getList().then(function (result) {
                 //
                 // })
+                
+                window.__eventId = this._options.eventId
+
 
                 var self = this;
                 var list = this.getContainer().find(".events-ProductList__list");
@@ -115,7 +118,7 @@ define(
 
                 var fixChecksButton = this.getChildControlByName('fixChecks')
                 var sendPayemntQuery =  this.getChildControlByName('sendPayemntQuery')
-                sendPayemntQuery.subscribe('onActivated', this.sendPaymentQueryOnActivated)
+                sendPayemntQuery.subscribe('onActivated', this.sendPaymentQueryOnActivated.bind(this))
                 this.subscribeTo(fixChecksButton, 'onActivated', function(){
 
                     self.getChildControls().forEach(function(x) { x.setEnabled(false) } )
@@ -126,7 +129,9 @@ define(
             },
 
             sendPaymentQueryOnActivated: function(event){
-                var options = {};
+                var options = {
+                    eventId: this._options.eventId
+                };
                 new OpenDialog({
                     template: 'Events/CheckInCheck/PaymentQuery/PaymentQuery'
                 }).execute({

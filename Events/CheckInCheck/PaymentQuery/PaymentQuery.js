@@ -22,7 +22,7 @@ define('Events/CheckInCheck/PaymentQuery/PaymentQuery', [
             init: function() {
                 PaymentQuery.superclass.init.call(this);
 
-                this.subscribe('onReady', this.onReadyHandler)
+                this.subscribe('onReady', this.onReadyHandler.bind(this))
             },
 
 
@@ -30,7 +30,9 @@ define('Events/CheckInCheck/PaymentQuery/PaymentQuery', [
                 //Добавляем кнопку из шаблона (pqSubmitButton)
                 var pqSubmitButton = this.getChildControlByName('pqSubmitButton')
                 pqSubmitButton.subscribe('onActivated', function (event){
-                var options = {};
+                var options = {
+                    eventId: this._options.eventId
+                };
                 new OpenDialog({
                     template: 'Events/CheckInCheck/RequisitesPicker/RequisitesPicker'
                 }).execute({

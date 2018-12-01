@@ -27,6 +27,7 @@ function(CompoundControl, dotTplFn, InformationPopupManager, UserInfo) {
             //alert(requisitesSubmitButton.name)
             requisitesSubmitButton.subscribe('onActivated', function (event){
                  message = 'Проверьте свои реквизиты: '
+                 this.requisites = this.getParent().getChildControlByName('myRequisitesTextBox').getText()
                  message = message + this.getParent().getChildControlByName('myRequisitesTextBox').getText()
                  //alert(message)
                  InformationPopupManager.showConfirmDialog({
@@ -46,19 +47,40 @@ function(CompoundControl, dotTplFn, InformationPopupManager, UserInfo) {
 
         //Вызывается если пользователь проверил и принял указаные реквизиты
         AcceptRequisites: function (){
-            //Получаем данные для добавления платежа и применить!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            //Получить event id
+            var eventId = window.__eventId
+            alert('EventId: ', eventId)
+            
+            //Запрос на получение creditor, debitor, sum
+
+            fetch('/paymentService/get_debitor_list', {
+                method: 'post',
+                headers: {
+                   'Accept': 'application/json',
+                   'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    event_id: toString(eventId),
+                })
+             }).then(function(result){
+                alert('Полученная информация: ' + toString(result))
+             });
+
+
+
+
             var uISF = UserInfo.get('ИдентификаторСервисаПрофилей')
             
             //alert(uISF)
             //Отсылаем запрос на добавление платежей
-            d = uISF
+          
             
 
             paymentsData = JSON.stringify({
-                event_id: 'be1e7e45-4081-483c-abae-62105c3f750e',
-                creditor: "b7f8b7cc-1618-43ca-b0a0-454f14a8f147",
+                event_id: eventId,
+                creditor: uISF,
                 status: 0,
-                req: '123456789012345',
+                req: toString(this.requisites),
                 debitor: [
                     {
                         debitor: "8a6603e0-f8cc-4528-8a58-6041cf410213",
