@@ -165,6 +165,8 @@ define(
                         sendRequest('POST', '/add_some_product_payers', {
                             productId: $el.data('id'),
                             members: res
+                        }).then(() => {
+                           EventBus.channel('checkChannel').notify('reloadMembers');
                         });
                     })
                 })
