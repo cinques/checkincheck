@@ -7,7 +7,9 @@ define(
         'tmpl!Events/CheckInCheck/ProductList',
         'Events/CheckInCheck/PaymentQuery/PaymentQuery',
         'SBIS3.CONTROLS/Action/OpenDialog',
+        'Core/EventBus',
         'Events/CheckInCheck/WebCam/WebCam',
+        'Events/CheckInCheck/PayerChoice/PayerChoice',
         'css!Events/CheckInCheck/ProductList'
     ],
     function (
@@ -17,6 +19,7 @@ define(
         template,
         PaymentQuery,
         OpenDialog,
+        EventBus
     ) {
         'use strict';
 
@@ -62,22 +65,52 @@ define(
 
                 });
 
-               this.subscribeTo(this.getChildControlByName('addCheck'), 'onMenuItemActivate', (ev, id) => {
-                  if (id == 1) {
-                     // с камеры
-                     new OpenDialog({
-                        template: 'Events/WebCam/WebCam'
-                     }).execute({
-                        dialogOptions: {
-                           width: 580,
-                           resizeable: false,
-                           autoWidth: false
-                        },
-                        mode: 'dialog'
+                var fileuplod = document.getElementById('fileuplod');
+                var payerId;     
+                     fileuplod.addEventListener('change', () => {
+                        var formData = new FormData();
+                        formData.append("sampleFile", fileuplod.files[0]);
+                        formData.append('payerId', payerId);
+                        formData.append('eventId', this._options.eventId);
+                        fetch('/payments/uploader/', {
+                            method: 'POST',
+                            body: formData
+                        }).then(() => {
+                            EventBus.channel('checkChannel').notify('check.uploaded');
+                        });              
                      });
-                  } else if (id == 2){
-                     // из файла
-                  }
+
+               this.subscribeTo(this.getChildControlByName('addCheck'), 'onMenuItemActivate', (ev, id) => {
+                new OpenDialog({
+                    template: 'Events/CheckInCheck/PayerChoice/PayerChoice'
+                 }).execute({
+                    dialogOptions: {
+                       width: 400,
+                       resizeable: false,
+                       autoWidth: false,
+                       title: 'Выберите заплатившего'
+                    },
+                    componentOptions: {
+                        eventId: this._options.eventId,
+                        handlers: {
+                            onChoice: function (event, _payerId) {
+                                debugger;
+                                payerId = _payerId;
+                               if (id == 1) {
+                                        // с камеры
+    
+                                    } else if (id == 2){
+                                    // из файла
+                                       fileuplod.click();
+                                    }
+                            }
+                        },
+                    },
+                    mode: 'dialog'
+                 });
+                  
+
+                 
                });
 
                 var fixChecksButton = this.getChildControlByName('fixChecks')
