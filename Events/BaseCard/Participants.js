@@ -720,6 +720,7 @@ define('Events/BaseCard/Participants', [
                var folders = result.getAll();
                folders.each(function (g) {
                   var rs = g.get('items');
+                  rs.addField({name: 'memberId', type: 'string'});
                   rs.addField({name: 'amount', type: 'string'});
                   rs.addField({name: 'detailing', type: 'object'});
                   rs.each(function (r) {
@@ -730,8 +731,9 @@ define('Events/BaseCard/Participants', [
                Object.keys(json).forEach(k => {
                   records.forEach(r => {
                      if (r.get('Subscriber') === k) {
+                        r.set('memberId', k);
                         r.set('amount', json[k].ammount);
-                        var detailing = Object.keys(json[k].detail).map(d => ({name: names[d], amount: json[k].detail[d].ammount }))
+                        var detailing = Object.keys(json[k].detail).map(d => ({name: names[d], amount: json[k].detail[d].ammount, memberId: d }))
                         r.set('detailing', detailing);
                      }
                   })
