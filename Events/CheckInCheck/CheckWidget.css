@@ -17,3 +17,8 @@
   justify-content: space-between;
   margin-bottom: 4px;
 }
+
+.CheckWidget-ProductList__pay {
+  margin-left: 4px;
+  display: inline-block;
+}

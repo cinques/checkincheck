@@ -4,9 +4,11 @@
 }
 .events-Product__name {
     color: #242942;
-    font-weight: bold;
     margin-left: 10px;
-    width: 60px;
+    font-size: 18px;
+    width: 422px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .events-Product__price {
@@ -21,7 +23,7 @@
 
 .events-Product__filedlink {
     height: 30px;
-    width: 190px;
+    width: 272px;
 
 }
 .events-Product {
@@ -30,13 +32,29 @@
     padding-right: 10px;
     display: inline-flex;
     align-items: flex-end;
-    width: 410px;
     font-size: 16px;
 }
 
 .events-ProductList__btn_container {
     display: flex;
     justify-content: right;
-
 }
 
+.events-ProductList__rec_button {
+    margin-left: 10px;
+}
+
+.events-ProductList__save {
+    margin-left: 10px;
+}
+
+.events-ProductList__pay {
+    margin-left: 10px;
+}
+
+.events-ProductList__container {
+    margin-top: 10px;
+    display: inline-flex;
+    justify-content: flex-end;
+    width: 669px;
+}

@@ -6,7 +6,6 @@ define(
         'Events/CheckInCheck/CheckList/Check',
         'tmpl!Events/CheckInCheck/ProductList',
         'Events/CheckInCheck/PaymentQuery/PaymentQuery',
-        'SBIS3.CONTROLS/Action/OpenDialog',
         'Core/EventBus',
         'SBIS3.CONTROLS/Utils/InformationPopupManager',
         'Events/CheckInCheck/WebCam/WebCam',
@@ -76,7 +75,7 @@ define(
 
             init: function () {
                 ProductList.superclass.init.apply(this);
-                
+
                 this._initChildren();
                 // var check = getList().then(function (result) {
                 //
@@ -181,10 +180,10 @@ define(
                            EventBus.channel('checkChannel').notify('reloadMembers');
                         });
                     })
-                })
-                var fixChecksButton = this.getChildControlByName('fixChecks')
-                var sendPayemntQuery =  this.getChildControlByName('sendPayemntQuery')
-                sendPayemntQuery.subscribe('onActivated', this.sendPaymentQueryOnActivated.bind(this))
+                });
+                var fixChecksButton = this.getChildControlByName('fixChecks');
+                // var sendPayemntQuery =  this.getChildControlByName('sendPayemntQuery');
+                // sendPayemntQuery.subscribe('onActivated', this.sendPaymentQueryOnActivated.bind(this));
                 this.subscribeTo(fixChecksButton, 'onActivated', function(){
                     //Фиксируем изменения при нажатии на кнопку "Зафиксировать"
                     fetch('/paymentService/to_fix', {
@@ -198,14 +197,14 @@ define(
                     }).then(result => {
                         //Отключить компоненты
                         this.getParent().getChildControls().forEach(function(x) { x.setEnabled(false) } )
-                        //Включить кнопку 
-                        sendPayemntQuery.setEnabled(true)
+                        //Включить кнопку
+                        // sendPayemntQuery.setEnabled(true)
 
                     }).catch(err => {
                     });
 
 
-                    
+
                    
                 })
 
@@ -226,9 +225,9 @@ define(
                         if (res){
                             // this.setEnabled(false);
                             self.getChildControls().forEach(function(x) { x.setEnabled(false) } );
-                            // //Включить кнопку 
-                            sendPayemntQuery = self.getChildControlByName('sendPayemntQuery').setEnabled(true);
-                        }  
+                            // //Включить кнопку
+                            // sendPayemntQuery = self.getChildControlByName('sendPayemntQuery').setEnabled(true);
+                        }
                     })
 
                 }).catch(err => {
@@ -238,26 +237,26 @@ define(
             onReadyHandler: function(event){
                 //Блочим контролы если ранее нажата была кнопка зафиксировать
                 var self = this;
-                
+
             },
 
-            sendPaymentQueryOnActivated: function(event){
-                var options = {
-                    eventId: this._options.eventId
-                };
-                new OpenDialog({
-                    template: 'Events/CheckInCheck/PaymentQuery/PaymentQuery'
-                }).execute({
-                    dialogOptions:     {
-                        width: 200,
-                        resizeable: false,
-                        autoWidth: false,
-                        title: "Запрос денег",
-                    },
-                    mode: 'dialog',
-                    componentOptions: options
-                })
-            },
+            //      sendPaymentQueryOnActivated: function(event){
+            //     var options = {
+            //         eventId: this._options.eventId
+            //     };
+            //     new OpenDialog({
+            //         template: 'Events/CheckInCheck/PaymentQuery/PaymentQuery'
+            //     }).execute({
+            //         dialogOptions:     {
+            //             width: 200,
+            //             resizeable: false,
+            //             autoWidth: false,
+            //             title: "Запрос денег",
+            //         },
+            //         mode: 'dialog',
+            //         componentOptions: options
+            //     })
+            // },
 
             _initChildren: function () {
                 this._children = {};

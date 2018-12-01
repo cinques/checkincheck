@@ -5,13 +5,18 @@ define(
     'tmpl!Events/CheckInCheck/CheckWidget',
     'tmpl!Events/CheckInCheck/CheckWidget/Check',
      'Core/EventBus',
+      'Events/CheckInCheck/PayerChoice/PayerChoice',
+      'SBIS3.CONTROLS/Action/OpenDialog',
     'css!Events/CheckInCheck/CheckWidget'
   ],
   function (
     BaseBlock,
     template,
     Check,
-    EventBus
+    EventBus,
+    PayerChoice,
+    OpenDialog
+
   ) {
     'use strict';
 
@@ -35,6 +40,8 @@ define(
 
        reload: function () {
           var list = this.getContainer().find(".events-CheckWidget__list");
+           var sendPayemntQuery =  this.getChildControlByName('sendPayemntQuery');
+           sendPayemntQuery.subscribe('onActivated', this.sendPaymentQueryOnActivated.bind(this));
           list.empty();
           getChecksTotal(this._options.eventId).then(function (result) {
              for (var i = 0; i < result.length; i++) {
@@ -46,6 +53,24 @@ define(
              }
           });
        },
+        sendPaymentQueryOnActivated: function(event){
+            var options = {
+                eventId: this._options.eventId
+            };
+            new OpenDialog({
+                template: 'Events/CheckInCheck/PaymentQuery/PaymentQuery'
+            }).execute({
+                dialogOptions:     {
+                    width: 200,
+                    resizeable: false,
+                    autoWidth: false,
+                    title: "Запрос денег",
+                },
+                mode: 'dialog',
+                componentOptions: options
+            })
+        },
+
 
       _initChildren: function () {
         this._children = {};
