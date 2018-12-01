@@ -1,8 +1,9 @@
-<div class="events-Product">
+<div class="events-Product" data-id="{{ item.productId }}">
    <div class="events-Product__name">{{ item.name }}</div>
    <div class="events-Product__price">{{item.price}}₽</div>
    <SBIS3.CONTROLS.DropdownList
            class="events-Product__dropdown"
+           name="dropdownl"
         idProperty="key"
         displayProperty="title"
         multiselect="{{false}}">
@@ -14,13 +15,16 @@
         <ws:items>
            <ws:Array>
               <ws:Object key="{{ 0 }}" title="{[ Все ]}" />
-              <ws:Object key="{{ 1 }}" title="{[ Кроме... ]}" />
-              <ws:Object key="{{ 2 }}" title="{[ Только... ]}" />
+              <ws:Object key="{{ 1 }}" title="{[ Все кроме ]}" />
+              <ws:Object key="{{ 2 }}" title="{[ Только ]}" />
            </ws:Array>
         </ws:items>
-     </SBIS3.CONTROLS.DropdownList>>
+     </SBIS3.CONTROLS.DropdownList>
       <Events.CheckInCheck.MembersFieldLink
          class="events-Product__filedlink"
          eventId="{{eventId}}"
-      />
+         selectedKeys="{{item.persons}}"
+      >
+
+      </Events.CheckInCheck.MembersFieldLink>
 </div>

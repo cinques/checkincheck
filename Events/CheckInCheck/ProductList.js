@@ -20,12 +20,13 @@ define(
     ) {
         'use strict';
 
-        function getData(eventId) {
+        function getData(eventId, members) {
             return fetch('/payments/get_event_products/' + eventId, {
-                method: 'GET',
+                method: 'POST',
                 headers: {'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
+                body: JSON.stringify({members: members})
             }).then(function(res) { return res.json()});
         }
 
@@ -44,16 +45,19 @@ define(
                 // var check = getList().then(function (result) {
                 //
                 // })
-                var self = this
-                var list = this.getContainer().find(".events-ProductList__list");
-                getData(this._options.eventId).then(function (result) {
 
+                var self = this;
+                var list = this.getContainer().find(".events-ProductList__list");
+                var members = this._context.getValue('membersAll');
+                var a = [];
+                members.each(m => a.push(m.get('Subscriber')));
+                getData(this._options.eventId, a).then(function (result) {
                     for( var i = 0; i< result.length; i++) {
                         new Check({
                             element: $('<div></div>').appendTo(list),
                             item: result[i],
                             parent: self,
-                        })
+                        });
                     }
 
                 });
