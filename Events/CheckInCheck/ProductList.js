@@ -32,6 +32,15 @@ define(
                 body: JSON.stringify({members: members})
             }).then(function(res) { return res.json()});
         }
+        function sendRequest(type, url, data) {
+            return fetch('/payments' + url, {
+                method: type,
+                headers: {'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+        }
 
         var ProductList = BaseBlock.extend({
             _dotTplFn: template,
@@ -56,6 +65,7 @@ define(
                 var list = this.getContainer().find(".events-ProductList__list");
                 var members = this._context.getValue('membersAll');
                 var a = [];
+                this.members = a;
                 members.each(m => a.push(m.get('Subscriber')));
                 getData(this._options.eventId, a).then(function (result) {
                     for( var i = 0; i< result.length; i++) {
@@ -63,6 +73,7 @@ define(
                             element: $('<div></div>').appendTo(list),
                             item: result[i],
                             parent: self,
+                            eventId: self._options.eventId
                         });
                     }
 
@@ -114,7 +125,38 @@ define(
 
                  
                });
+                var saveButton = this.getChildControlByName('save');
+                this.subscribeTo(saveButton, 'onActivated', function () {
+                    var $button = saveButton.getContainer();
+                    $('.events-Product').each(function(index, el){
 
+                        var
+                            $el = $(el),
+                            type = $el.find('.controls-DropdownList__value').text(),
+                            isIncluded = type === 'Только',
+                            input = $el.find('.controls-InputRender')[0].wsControl,
+                            res = [];
+
+                        sendRequest('POST', '/remove_all_product_payers', {
+                            productId: $el.data('id')
+                        });
+                        if (type === 'Все') {
+                            return;
+                        }
+                        input.getSelectedItems().each(function(element){
+                            res.push(element.get('Subscriber'));
+                        });
+                        if (!isIncluded) {
+                            res = self.members.filter(function(uuid){
+                                return !(res.indexOf(uuid) + 1)
+                            });
+                        }
+                        sendRequest('POST', '/add_some_product_payers', {
+                            productId: $el.data('id'),
+                            members: res
+                        });
+                    })
+                })
                 var fixChecksButton = this.getChildControlByName('fixChecks')
                 var sendPayemntQuery =  this.getChildControlByName('sendPayemntQuery')
                 sendPayemntQuery.subscribe('onActivated', this.sendPaymentQueryOnActivated.bind(this))
