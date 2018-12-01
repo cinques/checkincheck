@@ -106,10 +106,10 @@ function(CompoundControl, dotTplFn, InformationPopupManager, UserInfo, SbisServi
                     }).catch(err => {
                     });
 
-                    for(var i in debitor) {
-                        if(debitor.hasOwnProperty(i)) {
-                            debugger;
-                            self.sendMessage(eventId, requisites, debitor[i].sum, debitor[i].debitor);
+                    var debets = res[UserInfo.get('ИдентификаторСервисаПрофилей')].detail; 
+                    for(var i in debets) {
+                        if(debets.hasOwnProperty(i)) {
+                            RequisitesPicker.prototype.sendMessage(eventId, requisites, debets[i].ammount, i);
                         }
                     }
                 })
