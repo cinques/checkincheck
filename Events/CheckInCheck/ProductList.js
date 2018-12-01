@@ -51,33 +51,41 @@ define(
                 }
             },
 
+           reload: function () {
+              var self = this;
+              var list = this.getContainer().find(".events-ProductList__list");
+              list.empty();
+              var members = this._context.getValue('membersAll');
+              var a = [];
+              this.members = a;
+              members.each(m => a.push(m.get('Subscriber')));
+              getData(this._options.eventId, a).then(function (result) {
+                 for( var i = 0; i< result.length; i++) {
+                    new Check({
+                       element: $('<div></div>').appendTo(list),
+                       item: result[i],
+                       parent: self,
+                       eventId: self._options.eventId
+                    });
+                 }
+
+              });
+           },
+
             init: function () {
                 ProductList.superclass.init.apply(this);
                 this._initChildren();
                 // var check = getList().then(function (result) {
                 //
                 // })
-                
-                //window.sbisEventId = this._options.eventId
 
-
-                var self = this;
-                var list = this.getContainer().find(".events-ProductList__list");
-                var members = this._context.getValue('membersAll');
-                var a = [];
-                this.members = a;
-                members.each(m => a.push(m.get('Subscriber')));
-                getData(this._options.eventId, a).then(function (result) {
-                    for( var i = 0; i< result.length; i++) {
-                        new Check({
-                            element: $('<div></div>').appendTo(list),
-                            item: result[i],
-                            parent: self,
-                            eventId: self._options.eventId
-                        });
-                    }
-
-                });
+               var self = this;
+               this.reload();
+                this.subscribeTo(
+                   EventBus.channel('checkChannel'),
+                   'check.uploaded',
+                   this.reload.bind(this)
+                );
 
                 var fileuplod = document.getElementById('fileuplod');
                 var payerId;     

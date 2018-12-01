@@ -3,11 +3,15 @@ define(
    [
       'Lib/Control/CompoundControl/CompoundControl',
       'tmpl!Events/CheckInCheck/ProductList/Product',
+      'WS.Data/Collection/RecordSet',
+      'Events/BaseCard/Participants/Model',
       'css!Events/CheckInCheck/ProductList/Product'
    ],
    function (
       CompoundControl,
-      template
+      template,
+      RecordSet,
+      Model
    ) {
       'use strict';
 
@@ -32,6 +36,23 @@ define(
                     members.setEnabled(true);
                 }
              });
+
+            var membersAll = this._context.getValue('membersAll');
+            var selected = new RecordSet();
+            membersAll.each(m => {
+               if (~m.get('Subscriber').indexOf(this._options.item.persons)) {
+                  selected.add(new Model({
+                     rawData: {
+                        Subscriber: m.get("Subscriber"),
+                        SubscriberName: m.get('SubscriberName'),
+                        SubscriberSurname: m.get('SubscriberSurname')
+                     }
+                  }));
+               }
+            });
+             members.setSelectedItems(selected);
+
+
              window.kek = members
          },
 
