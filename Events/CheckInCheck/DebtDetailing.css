@@ -41,3 +41,11 @@
 .events-DebtDetailing__amount--red {
   color: red;
 }
+
+.BaseCardParticipantsUsers__user-info-position--green {
+  color:green;
+}
+
+.BaseCardParticipantsUsers__user-info-position--red {
+  color: red;
+}
