@@ -4,13 +4,16 @@ define(
         'Events/BaseCard/BaseBlock',
         'Events/CheckInCheck/ProductList/Product',
         'Events/CheckInCheck/CheckList/Check',
+        'SBIS3.CONTROLS/Action/OpenDialog',
         'tmpl!Events/CheckInCheck/ProductList',
+        'Events/WebCam/WebCam',
         'css!Events/CheckInCheck/ProductList'
     ],
     function (
         BaseBlock,
         Product,
         Check,
+        OpenDialog,
         template
     ) {
         'use strict';
@@ -95,6 +98,24 @@ define(
                     }
 
                 })
+
+                this.subscribeTo(this.getChildControlByName('addCheck'), 'onMenuItemActivate', (ev, id) => {
+                    if (id == 1) {
+                        // с камеры
+                        new OpenDialog({
+                            template: 'Events/WebCam/WebCam'
+                        }).execute({
+                            dialogOptions: {
+                                width: 580,
+                                resizeable: false,
+                                autoWidth: false
+                             },
+                            mode: 'dialog'
+                        });
+                    } else if (id == 2){
+                        // из файла
+                    }
+                });
 
             },
 
