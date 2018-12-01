@@ -157,10 +157,11 @@ define(
                             type = $el.find('.controls-DropdownList__value').text(),
                             isIncluded = type === 'Только',
                             input = $el.find('.controls-InputRender')[0].wsControl,
-                            res = [];
+                            res = [],
+                            deletePromise;
 
-                        sendRequest('POST', '/remove_all_product_payers', {
-                            productId: $el.data('id')
+                        deletePromise = sendRequest('POST', '/remove_all_product_payers', {
+                           productId: $el.data('id')
                         });
                         if (type === 'Все') {
                             return;
@@ -173,11 +174,13 @@ define(
                                 return !(res.indexOf(uuid) + 1)
                             });
                         }
-                        sendRequest('POST', '/add_some_product_payers', {
-                            productId: $el.data('id'),
-                            members: res
-                        }).then(() => {
-                           EventBus.channel('checkChannel').notify('reloadMembers');
+                        deletePromise.then(function(){
+                           sendRequest('POST', '/add_some_product_payers', {
+                              productId: $el.data('id'),
+                              members: res
+                           }).then(() => {
+                              EventBus.channel('checkChannel').notify('reloadMembers');
+                           });
                         });
                     })
                 });
