@@ -18,7 +18,6 @@ define(
         Check,
         template,
         PaymentQuery,
-        OpenDialog,
         EventBus,
         InformationPopupManager
     ) {
