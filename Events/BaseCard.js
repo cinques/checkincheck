@@ -323,7 +323,8 @@ define('Events/BaseCard',
                  Channel: this._options.record.get('Id'),
                  Inheritance: true, 
              });
-             window.sbisEventId = this._options.record.get('Id')
+             window.sbisEventId = this._options.record.get('Id');
+             window.eventName = this._options.record.get('Name');
              
              return new SbisService({
                  endpoint: 'Subscriber',

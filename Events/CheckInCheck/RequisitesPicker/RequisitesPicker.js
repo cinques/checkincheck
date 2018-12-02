@@ -65,7 +65,7 @@ function(CompoundControl, dotTplFn, InformationPopupManager, UserInfo, SbisServi
             var requisites = window.tmpRequisitesPickerRequisiter;
             //alert(requisites)
             var debitor = [];
-            fetch('/paymentService/get_debitor_list', {
+            fetch('/payments/get_debitor_list', {
                 method: 'post',
                 headers: {
                    'Accept': 'application/json',
@@ -96,7 +96,7 @@ function(CompoundControl, dotTplFn, InformationPopupManager, UserInfo, SbisServi
                         debitor,
                         req: requisites,       
                     });
-                    fetch('/paymentService/add_payment', {
+                    fetch('/payments/add_payment', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -109,7 +109,9 @@ function(CompoundControl, dotTplFn, InformationPopupManager, UserInfo, SbisServi
                     var debets = res[UserInfo.get('ИдентификаторСервисаПрофилей')].detail; 
                     for(var i in debets) {
                         if(debets.hasOwnProperty(i)) {
-                            RequisitesPicker.prototype.sendMessage(eventId, requisites, debets[i].ammount, i);
+                            if (debets[i].ammount > 0) {
+                                RequisitesPicker.prototype.sendMessage(eventId, requisites, debets[i].ammount, i);
+                            }
                         }
                     }
                 })
@@ -135,7 +137,7 @@ function(CompoundControl, dotTplFn, InformationPopupManager, UserInfo, SbisServi
             new SbisService({
                 endpoint: 'Персона'
             }).call('СОтправить', {
-                'Текст':      createYandexMoneyURL(requisites, sum),
+                'Текст':      'Вы должны мне ' + sum + 'руб. по мероприятю ' + window.eventName + 'Можете перевести деньги по ссылке: ' + createYandexMoneyURL(requisites, sum),
                 'Документ':   eventId,
                 'Диалог':     null,
                 'Получатели': memberId,

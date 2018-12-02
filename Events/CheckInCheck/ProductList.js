@@ -187,23 +187,29 @@ define(
                 // var sendPayemntQuery =  this.getChildControlByName('sendPayemntQuery');
                 // sendPayemntQuery.subscribe('onActivated', this.sendPaymentQueryOnActivated.bind(this));
                 this.subscribeTo(fixChecksButton, 'onActivated', function(){
-                    //Фиксируем изменения при нажатии на кнопку "Зафиксировать"
-                    fetch('/paymentService/to_fix', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            event_id: this.getParent()._options.eventId,
-                        })
-                    }).then(result => {
-                        //Отключить компоненты
-                        this.getParent().getChildControls().forEach(function(x) { x.setEnabled(false) } )
-                        //Включить кнопку
-                        // sendPayemntQuery.setEnabled(true)
+                    InformationPopupManager.showConfirmDialog({
+                        message: 'После фиксации дальнейшее редактирование будет не возможно',
+                        details: 'Вы уверены?'
+                    }, () => {
+                        //Фиксируем изменения при нажатии на кнопку "Зафиксировать"
+                        fetch('/payments/to_fix', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                event_id: this.getParent()._options.eventId,
+                            })
+                        }).then(result => {
+                            //Отключить компоненты
+                            this.getParent().getChildControls().forEach(function(x) { x.setEnabled(false) } )
+                            //Включить кнопку
+                            // sendPayemntQuery.setEnabled(true)
 
-                    }).catch(err => {
+                        }).catch(err => {
+                        });
                     });
+
 
 
 
@@ -213,7 +219,7 @@ define(
             },
             onProductsLoadHandler: function() {
                 var self = this;
-                fetch('/paymentService/is_fixed', {
+                fetch('/payments/is_fixed', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

@@ -67,6 +67,6 @@
 }
 
 .events-ProductList__list {
-    overflow-x: scroll;
-    overflow-y: hidden;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
