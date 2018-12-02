@@ -54,21 +54,36 @@ define(
           });
        },
         sendPaymentQueryOnActivated: function(event){
-            var options = {
-                eventId: this._options.eventId
-            };
-            new OpenDialog({
-                template: 'Events/CheckInCheck/PaymentQuery/PaymentQuery'
-            }).execute({
-                dialogOptions:     {
-                    width: 200,
-                    resizeable: false,
-                    autoWidth: false,
-                    title: "Запрос денег",
-                },
-                mode: 'dialog',
-                componentOptions: options
-            })
+          var options = {
+              eventId: this._options.eventId
+          };
+          new OpenDialog({
+              template: 'Events/CheckInCheck/RequisitesPicker/RequisitesPicker'
+          }).execute({
+              dialogOptions: {
+                  width: 780,
+                  resizeable: false,
+                  autoWidth: true,
+                  title: "Реквизиты",
+              },
+              mode: 'dialog',
+              componentOptions: options
+          })
+            // var options = {
+            //     eventId: this._options.eventId
+            // };
+            // new OpenDialog({
+            //     template: 'Events/CheckInCheck/PaymentQuery/PaymentQuery'
+            // }).execute({
+            //     dialogOptions:     {
+            //         width: 200,
+            //         resizeable: false,
+            //         autoWidth: false,
+            //         title: "Запрос денег",
+            //     },
+            //     mode: 'dialog',
+            //     componentOptions: options
+            // })
         },
 
 
