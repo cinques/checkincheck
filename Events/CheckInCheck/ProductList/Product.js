@@ -31,6 +31,7 @@ define(
              this.subscribeTo(dropdown, 'onSelectedItemsChange', function (e, idlist) {
                 if(idlist[0] == 0) {
                     members.setEnabled(false);
+                    members.clearSelectedItems();
                 }
                 else {
                     members.setEnabled(true);

@@ -1,4 +1,5 @@
 <div class="events-ProductList">
+    <div class="events-ProductList__header">
   <SBIS3.CONTROLS.Button.BackButton
      class="events-ProductList__BackButton"
      caption="{[Бюджет]}"
@@ -20,30 +21,25 @@
          </ws:Array>
       </ws:items>
    </SBIS3.CONTROLS.Menu.MenuIcon>
+        <SBIS3.CONTROLS.Button
+                name="save"
+                class="events-ProductList__save"
+                caption="{[Сохранить]}"
+                style="primary"
+        />
+        <div class="events-ProductList__container">
+            <SBIS3.CONTROLS.Button
+                    name="fixChecks"
+                    class="events-ProductList__rec_button"
+                    caption="{[Зафиксировать]}"
+                    style="primary"
+            />
+
+
+        </div>
+    </div>
+
 
   <div class="events-ProductList__list">
   </div>
-
-  <SBIS3.CONTROLS.Button
-          name="fixChecks"
-          class="events-ProductList__rec_button"
-          caption="{[Зафиксировать]}"
-          style="primary"
-  />
-    <SBIS3.CONTROLS.Button
-            name="save"
-            class="events-ProductList__save"
-            caption="{[Сохранить]}"
-            style="primary"
-    />
-  <SBIS3.CONTROLS.Button
-          name="sendPayemntQuery"
-         
-          caption="Запросить деньги"
-          style="primary"
-          enabled="{{false}}"
-  />
-
-
-
 </div>

@@ -6,8 +6,8 @@ define(
         'Events/CheckInCheck/CheckList/Check',
         'tmpl!Events/CheckInCheck/ProductList',
         'Events/CheckInCheck/PaymentQuery/PaymentQuery',
-        'SBIS3.CONTROLS/Action/OpenDialog',
         'Core/EventBus',
+        'SBIS3.CONTROLS/Utils/InformationPopupManager',
         'Events/CheckInCheck/WebCam/WebCam',
         'Events/CheckInCheck/PayerChoice/PayerChoice',
         'css!Events/CheckInCheck/ProductList'
@@ -18,8 +18,8 @@ define(
         Check,
         template,
         PaymentQuery,
-        OpenDialog,
-        EventBus
+        EventBus,
+        InformationPopupManager
     ) {
         'use strict';
 
@@ -74,7 +74,7 @@ define(
 
             init: function () {
                 ProductList.superclass.init.apply(this);
-                
+
                 this._initChildren();
                 // var check = getList().then(function (result) {
                 //
@@ -100,8 +100,18 @@ define(
                         fetch('/payments/uploader/', {
                             method: 'POST',
                             body: formData
-                        }).then(() => {
-                            EventBus.channel('checkChannel').notify('check.uploaded');
+                        }).then((res) => {
+                            if (res.status == 500) {
+                                InformationPopupManager.showMessageDialog({
+                                    message: 'Не удалось распознать QR-код',
+                                    status: 'error'
+                                })
+                            } else {
+                                InformationPopupManager.showNotification({
+                                    caption: 'Чек успешно загружен'
+                                })
+                                EventBus.channel('checkChannel').notify('check.uploaded');
+                            }    
                         });              
                      });
 
@@ -146,10 +156,11 @@ define(
                             type = $el.find('.controls-DropdownList__value').text(),
                             isIncluded = type === 'Только',
                             input = $el.find('.controls-InputRender')[0].wsControl,
-                            res = [];
+                            res = [],
+                            deletePromise;
 
-                        sendRequest('POST', '/remove_all_product_payers', {
-                            productId: $el.data('id')
+                        deletePromise = sendRequest('POST', '/remove_all_product_payers', {
+                           productId: $el.data('id')
                         });
                         if (type === 'Все') {
                             return;
@@ -162,15 +173,19 @@ define(
                                 return !(res.indexOf(uuid) + 1)
                             });
                         }
-                        sendRequest('POST', '/add_some_product_payers', {
-                            productId: $el.data('id'),
-                            members: res
+                        deletePromise.then(function(){
+                           sendRequest('POST', '/add_some_product_payers', {
+                              productId: $el.data('id'),
+                              members: res
+                           }).then(() => {
+                              EventBus.channel('checkChannel').notify('reloadMembers');
+                           });
                         });
                     })
-                })
-                var fixChecksButton = this.getChildControlByName('fixChecks')
-                var sendPayemntQuery =  this.getChildControlByName('sendPayemntQuery')
-                sendPayemntQuery.subscribe('onActivated', this.sendPaymentQueryOnActivated.bind(this))
+                });
+                var fixChecksButton = this.getChildControlByName('fixChecks');
+                // var sendPayemntQuery =  this.getChildControlByName('sendPayemntQuery');
+                // sendPayemntQuery.subscribe('onActivated', this.sendPaymentQueryOnActivated.bind(this));
                 this.subscribeTo(fixChecksButton, 'onActivated', function(){
                     //Фиксируем изменения при нажатии на кнопку "Зафиксировать"
                     fetch('/paymentService/to_fix', {
@@ -184,14 +199,14 @@ define(
                     }).then(result => {
                         //Отключить компоненты
                         this.getParent().getChildControls().forEach(function(x) { x.setEnabled(false) } )
-                        //Включить кнопку 
-                        sendPayemntQuery.setEnabled(true)
+                        //Включить кнопку
+                        // sendPayemntQuery.setEnabled(true)
 
                     }).catch(err => {
                     });
 
 
-                    
+
                    
                 })
 
@@ -212,9 +227,9 @@ define(
                         if (res){
                             // this.setEnabled(false);
                             self.getChildControls().forEach(function(x) { x.setEnabled(false) } );
-                            // //Включить кнопку 
-                            sendPayemntQuery = self.getChildControlByName('sendPayemntQuery').setEnabled(true);
-                        }  
+                            // //Включить кнопку
+                            // sendPayemntQuery = self.getChildControlByName('sendPayemntQuery').setEnabled(true);
+                        }
                     })
 
                 }).catch(err => {
@@ -224,26 +239,26 @@ define(
             onReadyHandler: function(event){
                 //Блочим контролы если ранее нажата была кнопка зафиксировать
                 var self = this;
-                
+
             },
 
-            sendPaymentQueryOnActivated: function(event){
-                var options = {
-                    eventId: this._options.eventId
-                };
-                new OpenDialog({
-                    template: 'Events/CheckInCheck/PaymentQuery/PaymentQuery'
-                }).execute({
-                    dialogOptions:     {
-                        width: 200,
-                        resizeable: false,
-                        autoWidth: false,
-                        title: "Запрос денег",
-                    },
-                    mode: 'dialog',
-                    componentOptions: options
-                })
-            },
+            //      sendPaymentQueryOnActivated: function(event){
+            //     var options = {
+            //         eventId: this._options.eventId
+            //     };
+            //     new OpenDialog({
+            //         template: 'Events/CheckInCheck/PaymentQuery/PaymentQuery'
+            //     }).execute({
+            //         dialogOptions:     {
+            //             width: 200,
+            //             resizeable: false,
+            //             autoWidth: false,
+            //             title: "Запрос денег",
+            //         },
+            //         mode: 'dialog',
+            //         componentOptions: options
+            //     })
+            // },
 
             _initChildren: function () {
                 this._children = {};

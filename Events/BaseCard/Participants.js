@@ -286,6 +286,12 @@ define('Events/BaseCard/Participants', [
             this._updateRootFolders.bind(this)
          );
 
+         this.subscribeTo(
+            EventBus.channel('checkChannel'),
+            'reloadMembers',
+            this._updateRootFolders.bind(this)
+         );
+
          // Перед сменой областей сохраняем id текущей вкладки
          this.subscribeTo(this._controls.switchArea, 'onBeforeChangeActiveArea', this._onBeforeChangeActiveArea.bind(this));
 
