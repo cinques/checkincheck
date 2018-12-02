@@ -1,6 +1,7 @@
 .events-Checks__name {
     font-size: 18px;
     font-weight: bold;
+    border-bottom: 1px solid #F0F0F0;
 }
 .events-Checks {
     margin: 10px;

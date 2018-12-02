@@ -23,3 +23,30 @@
   margin-left: 4px;
   display: inline-block;
 }
+
+.events-CheckWidget__debt {
+
+}
+
+.CheckWidget-ProductList__pay {
+  margin-left: 5px;
+}
+
+.events-CheckWidget__header {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  align-items: flex-end;
+  border-top: 1px solid #F0F0F0;
+  padding-top: 4px;
+}
+
+.events-CheckWidget__dive {
+  background-color: white;
+}
+
+.events-CheckWidget__amount {
+  display: flex;
+  font-size: 16px;
+  font-weight: bold;
+}

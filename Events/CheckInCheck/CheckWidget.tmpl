@@ -1,18 +1,30 @@
 <div class="events-CheckWidget">
-   <ws:partial
+  <ws:partial
       template="tmpl!Events/BaseCard/Widget"
       switchToCommand="switchToProductList"
       enabled="{{ true }}"
       titleEnabled="{{ true }}"
       title="{[Бюджет]}"
-   />
-   <SBIS3.CONTROLS.Button
-           name="sendPayemntQuery"
-           class="CheckWidget-ProductList__pay"
-           caption="Запросить деньги"
-           style="primary"
-           enabled="{{true}}"
-           allowChangeEnable="{{false}}"
-   />
-   <div class="events-CheckWidget__list"></div>
+  />
+
+  <div class="events-CheckWidget__list"></div>
+  <div class="events-CheckWidget__header">
+    <div class="events-CheckWidget__amount">
+      <div class="events-CheckWidget__debt">
+        {{item.debt}}
+      </div>
+      <div class="events-CheckWidget__dive">
+        ₽
+      </div>
+    </div>
+    <SBIS3.CONTROLS.Button
+        name="sendPayemntQuery"
+        class="CheckWidget-ProductList__pay"
+        visible="{{item.dept > 0}}"
+        caption="Запросить деньги"
+        style="primary"
+        enabled="{{true}}"
+        allowChangeEnable="{{false}}"
+    />
+  </div>
 </div>
