@@ -19,7 +19,23 @@ define(
 
   ) {
     'use strict';
-
+      function sendRequest(eventId, a) {
+         return fetch('/payments/get_debitor_list/', {
+              method: 'POST',
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                  eventId: eventId,
+                  members: a
+              })
+          }).then(function (res) {
+              return res.json().then(function (data) {
+                  return data[$.cookie('CpsUserId')].ammount;
+              })
+          });
+      }
     var CheckWidget = BaseBlock.extend({
       _dotTplFn: template,
       $protected: {
@@ -30,18 +46,35 @@ define(
         CheckWidget.superclass.init.apply(this);
         this._initChildren();
 
+
+          var sendPayemntQuery =  this.getChildControlByName('sendPayemntQuery');
+          sendPayemntQuery.subscribe('onActivated', this.sendPaymentQueryOnActivated.bind(this));
+
          this.reload();
          this.subscribeTo(
             EventBus.channel('checkChannel'),
             'check.uploaded',
             this.reload.bind(this)
          );
+
       },
 
        reload: function () {
-          var list = this.getContainer().find(".events-CheckWidget__list");
-           var sendPayemntQuery =  this.getChildControlByName('sendPayemntQuery');
-           sendPayemntQuery.subscribe('onActivated', this.sendPaymentQueryOnActivated.bind(this));
+           var self = this;
+           //this.members = a;
+           var list = this.getContainer().find(".events-CheckWidget__list");
+           var debt = this.getContainer().find(".events-CheckWidget__debt");
+
+            setTimeout(() => {
+               var members = this._context.getValue('membersAll');
+               var a = [];
+               members.each(m => a.push(m.get('Subscriber')));
+               sendRequest(this._options.eventId, a).then(function (result) {
+                   debt.text(result);
+                   self.getChildControlByName('sendPayemntQuery').setVisible(result > 0);
+               });
+            }, 500);
+
           list.empty();
           getChecksTotal(this._options.eventId).then(function (result) {
              for (var i = 0; i < result.length; i++) {

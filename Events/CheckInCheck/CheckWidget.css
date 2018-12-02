@@ -23,3 +23,17 @@
   margin-left: 4px;
   display: inline-block;
 }
+
+.events-CheckWidget__debt {
+  margin-left: 5px;
+}
+
+.CheckWidget-ProductList__pay {
+  margin-left: 5px;
+}
+
+.events-CheckWidget__header {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
